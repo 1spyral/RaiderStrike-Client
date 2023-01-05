@@ -10,13 +10,12 @@ public class Client {
     MouseListener mouseListener;
     MouseMotionListener mouseMotionListener;
 
-    Set<Integer> keysPressed;
-    boolean mouseDown;
-    int mouseX;
-    int mouseY;
+    Keyboard keyboard;
+    Mouse mouse;
+    Messenger messenger;
 
+    Server server;
     StateMachine stateMachine;
-    Thread server;
 
     Client() throws Exception {
         window = new JFrame("Magic Terrorists");   
@@ -25,9 +24,14 @@ public class Client {
         mouseListener = new MyMouseListener();
         mouseMotionListener = new MyMouseMotionListener();
 
-        keysPressed = new HashSet<Integer>();
+        keyboard = new Keyboard();
+        mouse = new Mouse();
+        messenger = new Messenger();
 
-        stateMachine = new StateMachine();        
+        server = new Server(messenger);
+        messenger.setServer(server);
+
+        stateMachine = new StateMachine(keyboard, mouse, messenger);
     }
     // set up the game window
     public void setup() {
@@ -43,41 +47,46 @@ public class Client {
     }
     // main game loop
     public void start() {
+        server.start();
         while (true) {
             window.repaint();
             try  {Thread.sleep(Const.FRAME_PERIOD);} catch(Exception e){}
 
-           // stateMachine.update(keysPressed, mouseDown, mouseX, mouseY);
+            stateMachine.update();
         }
     }    
     // act upon key and mouse events
     public class MyKeyListener implements KeyListener {   
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-            keysPressed.add(key);
+            keyboard.keyPressed(key);
         }
         public void keyReleased(KeyEvent e) { 
             int key = e.getKeyCode();
-            keysPressed.remove(key);
+            keyboard.keyReleased(key);
         }   
         public void keyTyped(KeyEvent e) {
             char keyChar = e.getKeyChar();
+            keyboard.keyTyped(keyChar);
         }           
     }    
 
     public class MyMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-            int x = e.getX();
-            int y = e.getY();    
+             
         }
         public void mousePressed(MouseEvent e) {
             if (e.getButton() == 1) {
-                mouseDown = true;
+                mouse.rightMousePressed();
+            } else if (e.getButton() == 2) {
+                mouse.leftMousePressed();
             }
         }
         public void mouseReleased(MouseEvent e) {
             if (e.getButton() == 1) {
-                mouseDown = false;
+                mouse.rightMouseReleased();
+            } else if (e.getButton() == 2) {
+                mouse.leftMouseReleased();
             }
         }
         public void mouseEntered(MouseEvent e) {
@@ -88,12 +97,12 @@ public class Client {
 
     public class MyMouseMotionListener implements MouseMotionListener{
         public void mouseMoved(MouseEvent e) {
-            mouseX = e.getX();
-            mouseY = e.getY();
+            mouse.setX(e.getX());
+            mouse.setY(e.getY());
         }
         public void mouseDragged(MouseEvent e) {
-            mouseX = e.getX();
-            mouseY = e.getY();
+            mouse.setX(e.getX());
+            mouse.setY(e.getY());
         }         
     }    
     //draw everything
@@ -109,4 +118,5 @@ public class Client {
             
             stateMachine.draw(g);
         }    
-    }    }
+    }    
+}
