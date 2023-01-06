@@ -1,6 +1,8 @@
 public class Mouse {
     private int x;
     private int y;
+    private boolean rightMouseClicked;
+    private boolean leftMouseClicked;
     private boolean rightMouseDown;
     private boolean leftMouseDown;
     
@@ -18,6 +20,24 @@ public class Mouse {
     }
     public void setY(int y) {
         this.y = y;
+    }
+    public boolean rightClicked() {
+        return this.rightMouseClicked;
+    }
+    public void rightMouseClick() {
+        this.rightMouseClicked = true;
+    }
+    public void rightMouseUnclick() {
+        this.rightMouseClicked = false;
+    }
+    public boolean leftClicked() {
+        return this.leftMouseClicked;
+    }
+    public void leftMouseClick() {
+        this.leftMouseClicked = true;
+    }
+    public void leftMouseUnclick() {
+        this.leftMouseClicked = false;
     }
     public boolean rightDown() {
         return this.rightMouseDown;

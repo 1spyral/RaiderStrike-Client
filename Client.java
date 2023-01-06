@@ -73,7 +73,11 @@ public class Client {
 
     public class MyMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-             
+            if (e.getButton() == 1) {
+                mouse.rightMouseClick();
+            } else if (e.getButton() == 2) {
+                mouse.leftMouseClick();
+            }
         }
         public void mousePressed(MouseEvent e) {
             if (e.getButton() == 1) {
