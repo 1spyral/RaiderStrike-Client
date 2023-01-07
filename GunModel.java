@@ -5,15 +5,19 @@ import javax.imageio.*;
 public enum GunModel {
     /* TODO: implement gun models */;
     // Name of enum constant can be acquired using .toString() method
-    private final Image topImage;
-    private final Image sideImage;
+    private Image topImage;
+    private Image sideImage;
     private final int maxAmmo;
     private final double reloadSpeed;
     private final double fireRate;
 
-    private GunModel(String topPath, String sidePath, int maxAmmo, double reloadSpeed, double fireRate) throws Exception {
-        this.topImage = ImageIO.read(new File(topPath));
-        this.sideImage = ImageIO.read(new File(sidePath));
+    private GunModel(String topPath, String sidePath, int maxAmmo, double reloadSpeed, double fireRate) {
+        try {
+            this.topImage = ImageIO.read(new File(topPath));
+            this.sideImage = ImageIO.read(new File(sidePath));
+        } catch (IOException e) {
+            /* TODO: implement error handling */
+        }
         this.maxAmmo = maxAmmo;
         this.reloadSpeed = reloadSpeed;
         this.fireRate = fireRate;

@@ -8,6 +8,9 @@ public class Gun {
         this.ammo = ammo;
         this.active = false;
     }
+    Gun(String type) {
+        this(type, GunModel.valueOf(type).getMaxAmmo());
+    }
     public int getAmmo() {
         return this.ammo; 
     }
