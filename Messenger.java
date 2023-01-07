@@ -7,9 +7,6 @@ import java.util.*;
 public class Messenger extends LinkedList<String> {
     Server server;
 
-    Messenger() {
-        super();
-    }
     public void setServer(Server server) {
         this.server = server;
     }
