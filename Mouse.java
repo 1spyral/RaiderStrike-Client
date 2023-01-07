@@ -1,4 +1,6 @@
-public class Mouse {
+import java.awt.event.*;
+
+public class Mouse implements MouseListener, MouseMotionListener {
     private int x;
     private int y;
     private boolean rightMouseClicked;
@@ -6,9 +8,6 @@ public class Mouse {
     private boolean rightMouseDown;
     private boolean leftMouseDown;
     
-    Mouse() {
-
-    }
     public int getX() {
         return this.x;
     }
@@ -24,7 +23,7 @@ public class Mouse {
     public boolean rightClicked() {
         return this.rightMouseClicked;
     }
-    public void rightMouseClick() {
+    protected void rightMouseClick() {
         this.rightMouseClicked = true;
     }
     public void rightMouseUnclick() {
@@ -33,7 +32,7 @@ public class Mouse {
     public boolean leftClicked() {
         return this.leftMouseClicked;
     }
-    public void leftMouseClick() {
+    protected void leftMouseClick() {
         this.leftMouseClicked = true;
     }
     public void leftMouseUnclick() {
@@ -42,19 +41,54 @@ public class Mouse {
     public boolean rightDown() {
         return this.rightMouseDown;
     }
-    public void rightMousePressed() {
+    protected void rightMousePressed() {
         this.rightMouseDown = true;
     }
-    public void rightMouseReleased() {
+    protected void rightMouseReleased() {
         this.rightMouseDown = false;
     }
     public boolean leftDown() {
         return this.leftMouseDown;
     }
-    public void leftMousePressed() {
+    protected void leftMousePressed() {
         this.leftMouseDown = true;
     }
-    public void leftMouseReleased() {
+    protected void leftMouseReleased() {
         this.leftMouseDown = false;
     }
+    /* Inherited from MouseListener */
+    public void mouseClicked(MouseEvent e) {
+        if (e.getButton() == 1) {
+            this.rightMouseClick();
+        } else if (e.getButton() == 2) {
+            this.leftMouseClick();
+        }
+    }
+    public void mousePressed(MouseEvent e) {
+        if (e.getButton() == 1) {
+            this.rightMousePressed();
+        } else if (e.getButton() == 2) {
+            this.leftMousePressed();
+        }
+    }
+    public void mouseReleased(MouseEvent e) {
+        if (e.getButton() == 1) {
+            this.rightMouseReleased();
+        } else if (e.getButton() == 2) {
+            this.leftMouseReleased();
+        }
+    }
+    public void mouseEntered(MouseEvent e) {
+    }
+    public void mouseExited(MouseEvent e) {
+    }
+    /* Inherited from MouseMotionListener */
+    public void mouseMoved(MouseEvent e) {
+        this.setX(e.getX());
+        this.setY(e.getY());
+    }
+    public void mouseDragged(MouseEvent e) {
+        this.setX(e.getX());
+        this.setY(e.getY());
+    }         
 }

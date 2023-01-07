@@ -1,5 +1,6 @@
 import java.util.*;
-public class Keyboard {
+import java.awt.event.*;
+public class Keyboard implements KeyListener {
     private Queue<Character> keysTyped;
     private HashSet<Integer> keysPressed;
     
@@ -13,16 +14,29 @@ public class Keyboard {
     public char next() {
         return this.keysTyped.poll();
     }
-    public void keyTyped(char c) {
+    protected void keyTyped(char c) {
         this.keysTyped.add(c);
     }
     public boolean isHeld(int key) {
         return this.keysPressed.contains(key);
     }
-    public void keyPressed(int key) {
+    protected void keyPressed(int key) {
         this.keysPressed.add(key);
     }
-    public void keyReleased(int key) {
+    protected void keyReleased(int key) {
         this.keysPressed.remove(key);
     }
+    // Inherited from KeyListener
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        this.keyPressed(key);
+    }
+    public void keyReleased(KeyEvent e) { 
+        int key = e.getKeyCode();
+        this.keyReleased(key);
+    }   
+    public void keyTyped(KeyEvent e) {
+        char keyChar = e.getKeyChar();
+        this.keyTyped(keyChar);
+    }              
 }

@@ -20,9 +20,6 @@ public class Client {
     Client() throws Exception {
         window = new JFrame("Magic Terrorists");   
         gamePanel = new GamePanel();          
-        keyListener = new MyKeyListener();
-        mouseListener = new MyMouseListener();
-        mouseMotionListener = new MyMouseMotionListener();
 
         keyboard = new Keyboard();
         mouse = new Mouse();
@@ -38,9 +35,9 @@ public class Client {
         window.setSize(Const.WIDTH, Const.HEIGHT);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        gamePanel.addKeyListener(keyListener);
-        gamePanel.addMouseListener(mouseListener);
-        gamePanel.addMouseMotionListener(mouseMotionListener);        
+        gamePanel.addKeyListener(keyboard);
+        gamePanel.addMouseListener(mouse);
+        gamePanel.addMouseMotionListener(mouse);        
         window.add(gamePanel); 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
@@ -55,60 +52,7 @@ public class Client {
             stateMachine.update();
         }
     }    
-    // act upon key and mouse events
-    public class MyKeyListener implements KeyListener {   
-        public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            keyboard.keyPressed(key);
-        }
-        public void keyReleased(KeyEvent e) { 
-            int key = e.getKeyCode();
-            keyboard.keyReleased(key);
-        }   
-        public void keyTyped(KeyEvent e) {
-            char keyChar = e.getKeyChar();
-            keyboard.keyTyped(keyChar);
-        }           
-    }    
 
-    public class MyMouseListener implements MouseListener {
-        public void mouseClicked(MouseEvent e) {
-            if (e.getButton() == 1) {
-                mouse.rightMouseClick();
-            } else if (e.getButton() == 2) {
-                mouse.leftMouseClick();
-            }
-        }
-        public void mousePressed(MouseEvent e) {
-            if (e.getButton() == 1) {
-                mouse.rightMousePressed();
-            } else if (e.getButton() == 2) {
-                mouse.leftMousePressed();
-            }
-        }
-        public void mouseReleased(MouseEvent e) {
-            if (e.getButton() == 1) {
-                mouse.rightMouseReleased();
-            } else if (e.getButton() == 2) {
-                mouse.leftMouseReleased();
-            }
-        }
-        public void mouseEntered(MouseEvent e) {
-        }
-        public void mouseExited(MouseEvent e) {
-        }
-    }    
-
-    public class MyMouseMotionListener implements MouseMotionListener{
-        public void mouseMoved(MouseEvent e) {
-            mouse.setX(e.getX());
-            mouse.setY(e.getY());
-        }
-        public void mouseDragged(MouseEvent e) {
-            mouse.setX(e.getX());
-            mouse.setY(e.getY());
-        }         
-    }    
     //draw everything
     public class GamePanel extends JPanel {
         GamePanel() {
