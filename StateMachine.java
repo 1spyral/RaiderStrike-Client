@@ -16,17 +16,24 @@ public class StateMachine {
         this.messenger = messenger;
 
         this.current = 0;
-        this.states = new State[]{new MenuState(), new LoadState(), new GameState()};
+        this.states = new State[]{
+            new MenuState(this.keyboard, this.mouse, this.messenger), 
+            new LoadState(this.keyboard, this.mouse, this.messenger), 
+            new GameState(this.keyboard, this.mouse, this.messenger)
+        };
+
+        this.states[this.current].setup(new Object[]{});
     }
     public void update() {
         while (true) {
-            current.update();
+            this.states[this.current].update();
         }
     }
     public void draw(Graphics g) {
         
     }
-    public void changeState() {
-
+    public void changeState(int state, Object[] args) {
+        this.current = state;
+        this.states[current].setup(args);
     }
 }
