@@ -6,5 +6,5 @@ public class Const {
     public static final int HEIGHT = 900;
     public static final int FRAME_PERIOD = 20;
 
-    private Const(){};
+    private Const(){}
 }
