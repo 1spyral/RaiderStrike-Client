@@ -6,9 +6,6 @@ import javax.swing.*;
 public class Client {
     JFrame window;
     GamePanel gamePanel;
-    KeyListener keyListener; 
-    MouseListener mouseListener;
-    MouseMotionListener mouseMotionListener;
 
     Keyboard keyboard;
     Mouse mouse;
