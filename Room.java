@@ -8,7 +8,7 @@ public class Room {
     Obstacle[] obstacles;
     Door[] doors;
 
-    Room(Color color, Color obstacleColor, Color penetrableColor, int width, int height, int obstacleCount, int doorCount) {
+    Room(Color color, Color obstacleColor, Color penetrableObstacleColor, int width, int height, int obstacleCount, int doorCount) {
         this.color = color;
         this.obstacleColor = obstacleColor;
         this.penetrableObstacleColor = penetrableObstacleColor;
