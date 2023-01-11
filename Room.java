@@ -26,4 +26,10 @@ public class Room {
     public void draw(Graphics g, Player[] players, GameObject[] gameObjects) {
         
     }
+    public void addObstacle(Obstacle obstacle) {
+        
+    }
+    public void addDoor(Door door) {
+
+    }
 }
