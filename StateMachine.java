@@ -22,15 +22,21 @@ public class StateMachine {
         this.states[this.current].setup(new Object[]{});
     }
     public void update() {
-        while (true) {
-            this.states[this.current].update();
+        // Update the current state
+        this.states[this.current].update();
+        // Switch to the next state if the current one has closed
+        if (!this.states[current].isActive()) {
+            this.nextState();
         }
     }
     public void draw(Graphics g) {
-        
+        // Render the current state
+        this.states[this.current].draw(g);
     }
-    public void changeState(int state, Object[] args) {
-        this.current = state;
+    public void nextState() {
+        // Arguments passed from previous state to next state
+        Object[] args = this.states[current].next();
+        this.current++;
         this.states[current].setup(args);
     }
 }

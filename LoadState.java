@@ -6,7 +6,7 @@ public class LoadState extends State {
         super(keyboard, mouse, messenger);
     }
     public void setup(Object[] args) {
-
+        super.setup();
     }
     public void update() {
 
@@ -15,6 +15,6 @@ public class LoadState extends State {
 
     }
     public void close() {
-
+        super.close();
     }
 }
