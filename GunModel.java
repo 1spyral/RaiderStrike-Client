@@ -1,5 +1,6 @@
 import java.io.*;
 import java.awt.*;
+import java.awt.image.*;
 import javax.imageio.*;
 
 public enum GunModel {
@@ -27,8 +28,8 @@ public enum GunModel {
     Odin("", "", 2300, 50, 4, 11);
     ;
     // Name of enum constant can be acquired using .toString() method
-    private Image topImage;
-    private Image sideImage;
+    private BufferedImage topImage;
+    private BufferedImage sideImage;
     private final int price;
     private final int maxAmmo;
     private final double reloadSpeed;
@@ -39,7 +40,7 @@ public enum GunModel {
             this.topImage = ImageIO.read(new File(topPath));
             this.sideImage = ImageIO.read(new File(sidePath));
         } catch (IOException e) {
-            /* TODO: implement error handling */
+            e.printStackTrace();
         }
         this.price = price;
         this.maxAmmo = maxAmmo;
