@@ -36,11 +36,24 @@ public class MenuState extends State {
     }
     public void update() {
         while (!this.messenger.isEmpty()) {
-            String[] command = this.messenger.poll().split(" ");
-            System.out.println("dpoasdpoasdi");
-            if (command[0].equals("ID")) {
-                System.out.println("hihi hi id");
-                this.id(Arrays.copyOfRange(command, 1, command.length));
+            String[] message = this.messenger.poll().split(" ");
+            String command = message[0];
+            String[] args = Arrays.copyOfRange(message, 1, message.length);
+            switch (command) {
+                case "ID":
+                this.id(args);
+                case "PLAYER":
+                this.player(args);
+                case "TEAM":
+                this.team(args);
+                case "AGENT":
+                this.agent(args);
+                case "NAME":
+                this.name(args);
+                case "READY":
+                this.ready(args);
+                case "START":
+                this.start(args);
             }
         }
         if (!this.nameSet) {
@@ -66,7 +79,26 @@ public class MenuState extends State {
         super.close();
     }
 
-    public void id(String[] args) {
+    private void id(String[] args) {
         this.id = Integer.valueOf(args[0]);
+    }
+    private void player(String[] args) {
+        this.players[Integer.valueOf(args[0])] = new Player();
+    }
+    private void team(String[] args) {
+        this.red = Integer.valueOf(args[0]);
+        this.blue = Integer.valueOf(args[1]);
+    }
+    private void agent(String[] args) {
+
+    }
+    private void name(String[] args) {
+
+    }
+    private void ready(String[] args) {
+        
+    }
+    private void start(String[] args) {
+        this.close();
     }
 }
