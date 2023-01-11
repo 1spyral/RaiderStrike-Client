@@ -23,7 +23,7 @@ public class Room {
     public int getHeight() {
         return this.height;
     }
-    public void draw(Graphics g) {
+    public void draw(Graphics g, Player[] players, GameObject[] gameObjects) {
         
     }
 }

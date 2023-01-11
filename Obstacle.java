@@ -1,3 +1,5 @@
-public class Obstacle {
+import java.awt.*;
+
+public class Obstacle extends Rectangle {
     
 }
