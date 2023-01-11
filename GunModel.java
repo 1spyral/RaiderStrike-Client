@@ -24,9 +24,8 @@ public enum GunModel {
     Vulture("", "", 1000, 8, 3, 1.5),
     Falcon("", "", 4000, 1, 2, 1),
     // Heavy Machine Guns
-    // TODO: name gun
-    Odin("", "", 2300, 50, 4, 11);
-    ;
+    Rhea("", "", 2300, 50, 4, 12);
+    
     // Name of enum constant can be acquired using .toString() method
     private BufferedImage topImage;
     private BufferedImage sideImage;
