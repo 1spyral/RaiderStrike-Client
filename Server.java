@@ -16,16 +16,13 @@ public class Server extends Thread {
     }
     public void run() {
         while (true) {
-            System.out.println("hello");
             String message = "";
             try {
                 message = this.input.readLine();
-                System.out.println("not hello");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             if (message.length() > 0) {
-                System.out.println("hihihi");
                 this.messenger.add(message);
             }
         }
