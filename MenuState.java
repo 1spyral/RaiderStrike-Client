@@ -82,6 +82,7 @@ public class MenuState extends State {
         }
     }
     public void draw(Graphics g) {
+        ((Graphics2D)g).setStroke(new BasicStroke(3));
         if (this.nameSet) {
         }
         else {
@@ -89,9 +90,13 @@ public class MenuState extends State {
             if (this.id == -1) {
                 g.setFont(FontLoader.getFont(80));
                 g.drawString("Waiting on server...", (Const.WIDTH - g.getFontMetrics().stringWidth("Waiting on server...")) / 2, (int)(Const.HEIGHT * 0.6));
+                if (this.caret.isActive()) {
+                    g.fillRect((int)(Const.WIDTH * 0.45), (int)(Const.HEIGHT * 0.7), (int)(Const.WIDTH * 0.05), (int)(Const.HEIGHT * 0.01));
+                } else {
+                    g.fillRect((int)(Const.WIDTH * 0.5), (int)(Const.HEIGHT * 0.7), (int)(Const.WIDTH * 0.05), (int)(Const.HEIGHT * 0.01));
+                }
             }
             else {
-                ((Graphics2D)g).setStroke(new BasicStroke(3));
                 g.drawRect((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.6), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
                 g.setFont(FontLoader.getFont(40));
                 g.drawString(this.name, (int)(Const.WIDTH * 0.31), (int)(Const.HEIGHT * 0.66));
