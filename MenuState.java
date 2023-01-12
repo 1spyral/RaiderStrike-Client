@@ -11,7 +11,7 @@ public class MenuState extends State {
     Player[] players;
     int red;
     int blue;
-    boolean caret;
+    Caret caret;
     String name;
     boolean nameSet;
 
@@ -30,7 +30,7 @@ public class MenuState extends State {
         this.players = new Player[6];
         this.red = 0;
         this.blue = 0;
-        this.caret = false;
+        this.caret = new Caret();
         this.name = "";
         this.nameSet = false;
     }
@@ -41,23 +41,43 @@ public class MenuState extends State {
             String[] args = Arrays.copyOfRange(message, 1, message.length);
             switch (command) {
                 case "ID":
-                this.id(args);
+                    this.id(args);
+                    break;
                 case "PLAYER":
-                this.player(args);
+                    this.player(args);
+                    break;
                 case "TEAM":
-                this.team(args);
+                    this.team(args);
+                    break;
                 case "AGENT":
-                this.agent(args);
+                    this.agent(args);
+                    break;
                 case "NAME":
-                this.name(args);
+                    this.name(args);
+                    break;
                 case "READY":
-                this.ready(args);
+                    this.ready(args);
+                    break;
                 case "START":
-                this.start(args);
+                    this.start(args);
+                    break;
+            }
+        }
+        while (this.keyboard.hasNext()) {
+            if (!this.nameSet) {
+                char key = this.keyboard.next();
+                if (key == '\b') {
+                    if (this.name.length() > 0) {
+                        this.name = this.name.substring(0, this.name.length() - 1);
+                    }
+                }
+                else if (this.name.length() < Const.MAX_NAME_LENGTH && key != '\n' && key != '\r') {
+                    this.name = this.name + key;
+                }
             }
         }
         if (!this.nameSet) {
-            this.caret = !this.caret;
+            this.caret.update();
 
         }
     }
@@ -66,12 +86,18 @@ public class MenuState extends State {
         }
         else {
             g.drawImage(this.title, (Const.WIDTH - this.title.getWidth()) / 2, (Const.HEIGHT - this.title.getHeight()) / 4, null);
-            g.setFont(FontLoader.getFont(80));
             if (this.id == -1) {
+                g.setFont(FontLoader.getFont(80));
                 g.drawString("Waiting on server...", (Const.WIDTH - g.getFontMetrics().stringWidth("Waiting on server...")) / 2, (int)(Const.HEIGHT * 0.6));
             }
             else {
-                g.drawRect((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.8), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
+                ((Graphics2D)g).setStroke(new BasicStroke(3));
+                g.drawRect((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.6), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
+                g.setFont(FontLoader.getFont(40));
+                g.drawString(this.name, (int)(Const.WIDTH * 0.31), (int)(Const.HEIGHT * 0.66));
+                if (this.caret.isActive()) {
+                    g.drawLine((int)(Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)), (int)(Const.HEIGHT * 0.62), (int)(Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)), (int)(Const.HEIGHT * 0.68));
+                }
             }      
         }
     }
@@ -100,5 +126,17 @@ public class MenuState extends State {
     }
     private void start(String[] args) {
         this.close();
+    }
+
+    private class Caret {
+        private int ticks;
+
+        public void update() {
+            ticks++;
+            ticks %= (int)(1000 / Const.FRAME_PERIOD);
+        }
+        public boolean isActive() {
+            return this.ticks < (int)(500 / Const.FRAME_PERIOD);
+        }
     }
 }
