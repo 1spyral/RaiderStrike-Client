@@ -23,6 +23,7 @@ public class MenuState extends State {
             e.printStackTrace();
         }
     }
+
     public void setup(Object[] args) {
         super.setup();
 
@@ -34,6 +35,7 @@ public class MenuState extends State {
         this.name = "";
         this.nameSet = false;
     }
+
     public void update() {
         while (!this.messenger.isEmpty()) {
             String[] message = this.messenger.poll().split(" ");
@@ -70,8 +72,7 @@ public class MenuState extends State {
                     if (this.name.length() > 0) {
                         this.name = this.name.substring(0, this.name.length() - 1);
                     }
-                }
-                else if (this.name.length() < Const.MAX_NAME_LENGTH && key != '\n' && key != '\r') {
+                } else if (this.name.length() < Const.MAX_NAME_LENGTH && key != '\n' && key != '\r') {
                     this.name = this.name + key;
                 }
             }
@@ -81,31 +82,36 @@ public class MenuState extends State {
 
         }
     }
+
     public void draw(Graphics g) {
-        ((Graphics2D)g).setStroke(new BasicStroke(3));
+        ((Graphics2D) g).setStroke(new BasicStroke(3));
         if (this.nameSet) {
-        }
-        else {
-            g.drawImage(this.title, (Const.WIDTH - this.title.getWidth()) / 2, (Const.HEIGHT - this.title.getHeight()) / 4, null);
+        } else {
+            g.drawImage(this.title, (Const.WIDTH - this.title.getWidth()) / 2,
+                    (Const.HEIGHT - this.title.getHeight()) / 4, null);
             if (this.id == -1) {
-                g.setFont(FontLoader.getFont(80));
-                g.drawString("Waiting on server...", (Const.WIDTH - g.getFontMetrics().stringWidth("Waiting on server...")) / 2, (int)(Const.HEIGHT * 0.6));
+                Text.drawCentered(g, 80, "Waiting on server...", Const.WIDTH / 2, Const.HEIGHT * 0.6);
                 if (this.caret.isActive()) {
-                    g.fillRect((int)(Const.WIDTH * 0.45), (int)(Const.HEIGHT * 0.7), (int)(Const.WIDTH * 0.05), (int)(Const.HEIGHT * 0.01));
+                    g.fillRect((int) (Const.WIDTH * 0.45), (int) (Const.HEIGHT * 0.7), (int) (Const.WIDTH * 0.05),
+                            (int) (Const.HEIGHT * 0.01));
                 } else {
-                    g.fillRect((int)(Const.WIDTH * 0.5), (int)(Const.HEIGHT * 0.7), (int)(Const.WIDTH * 0.05), (int)(Const.HEIGHT * 0.01));
+                    g.fillRect((int) (Const.WIDTH * 0.5), (int) (Const.HEIGHT * 0.7), (int) (Const.WIDTH * 0.05),
+                            (int) (Const.HEIGHT * 0.01));
+                }
+            } else {
+                g.drawRect((int) (Const.WIDTH * 0.3), (int) (Const.HEIGHT * 0.6), (int) (Const.WIDTH * 0.4),
+                        (int) (Const.HEIGHT * 0.1));
+                Text.draw(g, 40, this.name, Const.WIDTH * 0.31, Const.HEIGHT * 0.66);
+                if (this.caret.isActive()) {
+                    g.drawLine((int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)),
+                            (int) (Const.HEIGHT * 0.62),
+                            (int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)),
+                            (int) (Const.HEIGHT * 0.68));
                 }
             }
-            else {
-                g.drawRect((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.6), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
-                g.setFont(FontLoader.getFont(40));
-                g.drawString(this.name, (int)(Const.WIDTH * 0.31), (int)(Const.HEIGHT * 0.66));
-                if (this.caret.isActive()) {
-                    g.drawLine((int)(Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)), (int)(Const.HEIGHT * 0.62), (int)(Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)), (int)(Const.HEIGHT * 0.68));
-                }
-            }      
         }
     }
+
     public void close() {
         super.close();
     }
@@ -113,22 +119,28 @@ public class MenuState extends State {
     private void id(String[] args) {
         this.id = Integer.valueOf(args[0]);
     }
+
     private void player(String[] args) {
         this.players[Integer.valueOf(args[0])] = new Player();
     }
+
     private void team(String[] args) {
         this.red = Integer.valueOf(args[0]);
         this.blue = Integer.valueOf(args[1]);
     }
+
     private void agent(String[] args) {
 
     }
+
     private void name(String[] args) {
 
     }
+
     private void ready(String[] args) {
-        
+
     }
+
     private void start(String[] args) {
         this.close();
     }
@@ -138,10 +150,11 @@ public class MenuState extends State {
 
         public void update() {
             ticks++;
-            ticks %= (int)(1000 / Const.FRAME_PERIOD);
+            ticks %= (int) (1000 / Const.FRAME_PERIOD);
         }
+
         public boolean isActive() {
-            return this.ticks < (int)(500 / Const.FRAME_PERIOD);
+            return this.ticks < (int) (500 / Const.FRAME_PERIOD);
         }
     }
 }
