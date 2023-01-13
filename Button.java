@@ -10,7 +10,7 @@ public class Button extends Rectangle {
     }
     public void draw(Graphics g) {
         ((Graphics2D)g).setStroke(new BasicStroke(3));
-        g.drawRect(this.x, this.y, this.width, this.height);
-        g.setFont(FontLoader.getFont(this.fontSize));
-    }    
+        g.fillRect(this.x, this.y, this.width, this.height);
+        Text.drawCentered(g, this.fontSize, this.text, this);
+    }
 }
