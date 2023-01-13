@@ -1,4 +1,5 @@
 import java.util.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class Mouse implements MouseListener, MouseMotionListener {
@@ -34,25 +35,16 @@ public class Mouse implements MouseListener, MouseMotionListener {
         }
     }
 
-    public class Click {
+    public class Click extends Point {
         private int button;
-        private int x;
-        private int y;
 
         Click(int button, int x, int y) {
+            super(x, y);
             this.button = button;
-            this.x = x;
-            this.y = y;
         }
         
         public int getButton() {
             return this.button;
-        }
-        public int getX() {
-            return this.x;
-        }
-        public int getY() {
-            return this.y;
         }
     }
 
