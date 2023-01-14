@@ -32,6 +32,9 @@ public class Player {
     public void setTeam(int team) {
         this.team = team;
     }
+    public int getAgent() {
+        return this.agent;
+    }
     public void setAgent(int agent) {
         this.agent = agent;
     }
