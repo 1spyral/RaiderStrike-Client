@@ -2,24 +2,18 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Mouse implements MouseListener, MouseMotionListener {
-    private int x;
-    private int y;
+public class Mouse extends Point implements MouseListener, MouseMotionListener {
     private Queue<Click> clicks;
     private boolean[] pressed;
     
     Mouse() {
-        this.x = -1;
-        this.y = -1;
+        super(-1, -1);
         this.clicks = new LinkedList<Click>();
         this.pressed = new boolean[17];
     }
 
-    public int getX() {
-        return this.x;
-    }
-    public int getY() {
-        return this.y;
+    public boolean hasNext() {
+        return !this.clicks.isEmpty();
     }
     public Click poll() {
         return this.clicks.poll();
