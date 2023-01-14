@@ -9,14 +9,14 @@ public abstract class State {
     private boolean active;
     protected Object[] nextArgs;
 
-    protected ArrayList<Button> buttons;
+    protected HashMap<String, Button> buttons;
 
     State(Keyboard keyboard, Mouse mouse, Messenger messenger) {
         this.keyboard = keyboard;
         this.mouse = mouse;
         this.messenger = messenger;
 
-        this.buttons = new ArrayList<Button>();
+        this.buttons = new HashMap<String, Button>();
 
         this.active = false;
     }
@@ -35,7 +35,7 @@ public abstract class State {
     public abstract void setup(Object[] args);
     public abstract void update();
     public void draw(Graphics g) {
-        for (Button button: this.buttons) {
+        for (Button button: this.buttons.values()) {
             button.draw(g);
         }
     }

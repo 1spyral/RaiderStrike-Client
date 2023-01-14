@@ -7,26 +7,40 @@ public abstract class Button extends Rectangle {
     protected String text;
     protected Color color;
     protected Color hoverColor;
+    protected Color textColor;
     protected int fontSize;
 
-    Button(Mouse mouse, int x, int y, int width, int height, String text, Color color, int fontSize) {
-        this(mouse, x, y, width, height, text, color, color, fontSize);
-    }
-    Button(Mouse mouse, int x, int y, int width, int height, String text, Color color, Color hoverColor, int fontSize) {
-        super(x, y, width, height);
-        this.active = true;
-        
+    Button(Mouse mouse) {
         this.mouse = mouse;
-        this.text = text;
-        this.color = color;
-        this.hoverColor = hoverColor;
-        this.fontSize = fontSize;
+
+        this.active = false;
+        
+        this.text = "";
+        this.color = Color.WHITE;
+        this.hoverColor = Color.WHITE;
+        this.textColor = Color.BLACK;
+        this.fontSize = 20;
     }
     public boolean isActive() {
         return this.active;
     }
     public void setActive(boolean active) {
         this.active = active;
+    }
+    public void setText(String text) {
+        this.text = text;
+    }
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    public void setHoverColor(Color hoverColor) {
+        this.hoverColor = hoverColor;
+    }
+    public void setTextColor(Color textColor) {
+        this.textColor = textColor;
+    }
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
     }
     public void draw(Graphics g) {
         if (!this.active) {
@@ -40,12 +54,14 @@ public abstract class Button extends Rectangle {
             g.setColor(this.color);
         }
         g.fillRect(this.x, this.y, this.width, this.height);
+        g.setColor(this.textColor);
         Text.drawCentered(g, this.fontSize, this.text, this);
     }
-    public void click(Mouse.Click click) {
+    public boolean click(Mouse.Click click) {
         if (this.active && this.contains(click)) {
-            this.run();
+            return this.run();
         }
+        return false;
     }
-    public abstract void run();
+    public abstract boolean run();
 }

@@ -34,8 +34,34 @@ public class MenuState extends State {
         this.caret = new Caret();
         this.name = "";
         this.nameSet = false;
-    }
 
+        Button nameButton = new NameButton(this.mouse);
+        nameButton.setBounds((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.65), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
+        nameButton.setText("JOIN");
+        nameButton.setColor(Color.BLACK);
+        nameButton.setHoverColor(Color.GRAY);
+        nameButton.setTextColor(Color.WHITE);
+        nameButton.setFontSize(30);
+        this.buttons.put("name", nameButton);
+
+        Button redButton = new RedButton(this.mouse);
+        redButton.setBounds((int)(Const.WIDTH * 0.15), (int)(Const.HEIGHT * 0.5 - Const.WIDTH * 0.15), (int)(Const.WIDTH * 0.3), (int)(Const.WIDTH * 0.3));
+        redButton.setText("TEAM RED");
+        redButton.setColor(Color.RED);
+        redButton.setHoverColor(Color.PINK);
+        redButton.setTextColor(Color.BLACK);
+        redButton.setFontSize(20);
+        this.buttons.put("red", redButton);
+
+        Button blueButton = new BlueButton(this.mouse);
+        blueButton.setBounds((int)(Const.WIDTH * 0.55), (int)(Const.HEIGHT * 0.5 - Const.WIDTH * 0.15), (int)(Const.WIDTH * 0.3), (int)(Const.WIDTH * 0.3));
+        blueButton.setText("TEAM BLUE");
+        blueButton.setColor(Color.BLUE);
+        blueButton.setHoverColor(Color.CYAN);
+        blueButton.setTextColor(Color.BLACK);
+        blueButton.setFontSize(20);
+        this.buttons.put("blue", blueButton);
+    }
     public void update() {
         while (!this.messenger.isEmpty()) {
             String[] message = this.messenger.poll().split(" ");
@@ -74,13 +100,18 @@ public class MenuState extends State {
                     }
                 } else if (this.name.length() < Const.MAX_NAME_LENGTH && key != '\n' && key != '\r') {
                     this.name = this.name + key;
+                    if (this.name.equals(" ")) {
+                        this.name = "";
+                    }
                 }
             }
         }
         while (this.mouse.hasNext()) {
             Mouse.Click click = this.mouse.poll();
-            for (Button button: this.buttons) {
-                button.click(click);
+            for (Button button: this.buttons.values()) {
+                if (button.click(click)) {
+                    break;
+                }
             }
         }
         if (!this.nameSet) {
@@ -88,10 +119,10 @@ public class MenuState extends State {
 
         }
     }
-
     public void draw(Graphics g) {
         super.draw(g);
         ((Graphics2D) g).setStroke(new BasicStroke(3));
+        g.setColor(Color.BLACK);
         if (this.nameSet) {
 
         } 
@@ -101,66 +132,98 @@ public class MenuState extends State {
             if (this.id == -1) {
                 Text.drawCentered(g, 80, "Waiting on server...", Const.WIDTH / 2, Const.HEIGHT * 0.6);
                 if (this.caret.isActive()) {
-                    g.fillRect((int) (Const.WIDTH * 0.45), (int) (Const.HEIGHT * 0.7), (int) (Const.WIDTH * 0.05),
-                            (int) (Const.HEIGHT * 0.01));
+                    g.fillRect((int) (Const.WIDTH * 0.45), (int) (Const.HEIGHT * 0.7), (int) (Const.WIDTH * 0.05), (int) (Const.HEIGHT * 0.01));
                 } else {
-                    g.fillRect((int) (Const.WIDTH * 0.5), (int) (Const.HEIGHT * 0.7), (int) (Const.WIDTH * 0.05),
-                            (int) (Const.HEIGHT * 0.01));
+                    g.fillRect((int) (Const.WIDTH * 0.5), (int) (Const.HEIGHT * 0.7), (int) (Const.WIDTH * 0.05), (int) (Const.HEIGHT * 0.01));
                 }
             } else {
-                g.drawRect((int) (Const.WIDTH * 0.3), (int) (Const.HEIGHT * 0.6), (int) (Const.WIDTH * 0.4),
-                        (int) (Const.HEIGHT * 0.1));
-                Text.draw(g, 40, this.name, Const.WIDTH * 0.31, Const.HEIGHT * 0.66);
+                g.drawRect((int) (Const.WIDTH * 0.3), (int) (Const.HEIGHT * 0.5), (int) (Const.WIDTH * 0.4), (int) (Const.HEIGHT * 0.1));
+                Text.draw(g, 40, this.name, Const.WIDTH * 0.31, Const.HEIGHT * 0.56);
                 if (this.caret.isActive()) {
-                    g.drawLine((int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)),
-                            (int) (Const.HEIGHT * 0.62),
-                            (int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)),
-                            (int) (Const.HEIGHT * 0.68));
+                    g.drawLine((int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)), (int) (Const.HEIGHT * 0.52), (int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(this.name)), (int) (Const.HEIGHT * 0.58));
                 }
             }
         }
     }
-
     public void close() {
         super.close();
     }
-
     private void id(String[] args) {
         this.id = Integer.valueOf(args[0]);
+        this.buttons.get("name").setActive(true);
     }
-
     private void player(String[] args) {
         this.players[Integer.valueOf(args[0])] = new Player();
     }
-
     private void team(String[] args) {
         this.red = Integer.valueOf(args[0]);
         this.blue = Integer.valueOf(args[1]);
+        this.buttons.get("red").setText("TEAM RED: " + this.red + "/3");
+        this.buttons.get("blue").setText("TEAM BLUE: " + this.blue + "/3");
     }
-
     private void agent(String[] args) {
-
+        this.players[Integer.valueOf(args[0])].setAgent(Integer.valueOf(args[1]));
     }
-
     private void name(String[] args) {
-
+        String fullName = "";
+        for (String word: Arrays.copyOfRange(args, 1, args.length)) {
+            fullName = fullName + " " + word;
+        }
+        fullName = fullName.trim();
+        this.players[Integer.valueOf(args[0])].setName(fullName);
     }
-
     private void ready(String[] args) {
-
+        this.players[Integer.valueOf(args[0])].lock();
     }
-
     private void start(String[] args) {
         this.close();
     }
 
     private class NameButton extends Button {
-        NameButton(Mouse mouse, int x, int y, int width, int height, String text, Color color, Color hoverColor, int fontSize) {
-            super(mouse, x, y, width, height, text, color, hoverColor, fontSize);
+        NameButton(Mouse mouse) {
+            super(mouse);
         }
-        
-        public void run() {
-            
+        public boolean run() {
+            if (name.length() == 0) {
+                return false;
+            }
+            messenger.print("NAME " + name);
+            nameSet = true;
+            this.setActive(false);
+            buttons.get("red").setActive(true);
+            buttons.get("blue").setActive(true);
+            return true;
+        }
+    }
+    private class RedButton extends Button {
+        RedButton(Mouse mouse) {
+            super(mouse);
+        }
+        public void draw(Graphics g) {
+            super.draw(g);
+        }
+        public boolean run() {
+            if (red >= 3) {
+                return false;
+            }
+            messenger.print("TEAM 0");
+            this.setActive(false);
+            buttons.get("blue").setActive(false);
+            return true;
+        }
+    }
+    private class BlueButton extends Button {
+        BlueButton(Mouse mouse) {
+            super(mouse);
+        }
+        public boolean run() {
+            if (blue >= 3) {
+                return false;
+            }
+            messenger.print("TEAM 1");
+            this.setActive(false);
+            buttons.get("red").setActive(false);
+            return true;
         }
     }
     private class Caret {
