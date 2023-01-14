@@ -30,6 +30,7 @@ public abstract class State {
         this.active = true;
     }
     public void close() {
+        this.buttons.clear();
         this.active = false;
     }
     public abstract void setup(Object[] args);

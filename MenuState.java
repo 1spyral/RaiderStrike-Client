@@ -35,6 +35,7 @@ public class MenuState extends State {
         this.caret = new Caret();
         this.name = "";
         this.nameSet = false;
+        this.ready = false;
 
         Button nameButton = new NameButton(this.mouse);
         nameButton.setBounds((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.65), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
