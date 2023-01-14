@@ -9,7 +9,7 @@ public class Keyboard implements KeyListener {
         this.keysPressed = new HashSet<Integer>();
     }
     public boolean hasNext() {
-        return this.keysTyped.size() > 0;
+        return !this.keysTyped.isEmpty();
     }
     public char next() {
         return this.keysTyped.poll();
