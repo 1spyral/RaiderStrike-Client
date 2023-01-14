@@ -1,5 +1,5 @@
+import java.util.*;
 import java.io.*;
-import java.util.Arrays;
 import java.awt.*;
 import java.awt.image.*;
 import javax.imageio.*;
@@ -77,6 +77,12 @@ public class MenuState extends State {
                 }
             }
         }
+        while (this.mouse.hasNext()) {
+            Mouse.Click click = this.mouse.poll();
+            for (Button button: this.buttons) {
+                button.click(click);
+            }
+        }
         if (!this.nameSet) {
             this.caret.update();
 
@@ -84,9 +90,12 @@ public class MenuState extends State {
     }
 
     public void draw(Graphics g) {
+        super.draw(g);
         ((Graphics2D) g).setStroke(new BasicStroke(3));
         if (this.nameSet) {
-        } else {
+
+        } 
+        else {
             g.drawImage(this.title, (Const.WIDTH - this.title.getWidth()) / 2,
                     (Const.HEIGHT - this.title.getHeight()) / 4, null);
             if (this.id == -1) {
@@ -145,6 +154,15 @@ public class MenuState extends State {
         this.close();
     }
 
+    private class NameButton extends Button {
+        NameButton(Mouse mouse, int x, int y, int width, int height, String text, Color color, Color hoverColor, int fontSize) {
+            super(mouse, x, y, width, height, text, color, hoverColor, fontSize);
+        }
+        
+        public void run() {
+            
+        }
+    }
     private class Caret {
         private int ticks;
 
