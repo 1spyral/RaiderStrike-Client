@@ -7,13 +7,13 @@ public class Text {
     public static void draw(Graphics g, int fontSize, String text, double x, double y) {
         g.setFont(FontLoader.getFont(fontSize));
         FontMetrics fm = g.getFontMetrics();
-        g.drawString(text, (int)x, (int)y - fm.getHeight() / 2 + fm.getAscent());
+        g.drawString(text, (int)x, (int)(y - fm.getHeight() / 2 + fm.getAscent()));
     }
     // Draw text centered at (x, y)
     public static void drawCentered(Graphics g, int fontSize, String text, double x, double y) {
         g.setFont(FontLoader.getFont(fontSize));
         FontMetrics fm = g.getFontMetrics();
-        g.drawString(text, (int)x - fm.stringWidth(text) / 2, (int)y - fm.getHeight() / 2 + fm.getAscent());
+        g.drawString(text, (int)(x - fm.stringWidth(text) / 2), (int)(y - fm.getHeight() / 2 + fm.getAscent()));
     }
     // Draw text centered at the provided rectangle
     public static void drawCentered(Graphics g, int fontSize, String text, double x, double y, int width, int height) {
@@ -21,6 +21,6 @@ public class Text {
     }
     // Draw text centered at the provided rectangle
     public static void drawCentered(Graphics g, int fontSize, String text, Rectangle rect) {
-        drawCentered(g, fontSize, text, (int)rect.getCenterX(), (int)rect.getCenterY());
+        drawCentered(g, fontSize, text, rect.getCenterX(), rect.getCenterY());
     }
 }
