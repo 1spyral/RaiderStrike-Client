@@ -63,6 +63,7 @@ public class MenuState extends State {
         blueButton.setTextColor(Color.BLACK);
         blueButton.setFontSize(20);
         this.buttons.put("blue", blueButton);
+
         for (int agentId = 0; agentId < Agent.values().length; agentId++) {
             Button agentButton = new AgentButton(this.mouse, Agent.values()[agentId]);
             agentButton.setBounds((int)(Const.WIDTH * (0.5 - Agent.values().length * 0.05 + agentId * 0.1)), (int)(Const.HEIGHT * 0.5), (int)(Const.WIDTH * 0.1), (int)(Const.WIDTH * 0.1));
@@ -73,6 +74,12 @@ public class MenuState extends State {
         }
 
         Button readyButton = new ReadyButton(this.mouse);
+        readyButton.setBounds((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.7), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
+        readyButton.setText("READY");
+        readyButton.setColor(Color.GREEN);
+        readyButton.setHoverColor(Color.CYAN);
+        readyButton.setTextColor(Color.WHITE);
+        this.buttons.put("ready", readyButton);
     }
     public void update() {
         while (!this.messenger.isEmpty()) {
@@ -290,6 +297,7 @@ public class MenuState extends State {
             }
             ready = true;
             messenger.print("READY");
+            this.setActive(false);
             return true;
         }
     }
