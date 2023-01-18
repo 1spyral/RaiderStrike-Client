@@ -63,6 +63,16 @@ public class MenuState extends State {
         blueButton.setTextColor(Color.BLACK);
         blueButton.setFontSize(20);
         this.buttons.put("blue", blueButton);
+        for (int agentId = 0; agentId < Agent.values().length; agentId++) {
+            Button agentButton = new AgentButton(this.mouse, Agent.values()[agentId]);
+            agentButton.setBounds((int)(Const.WIDTH * (0.5 - Agent.values().length * 0.05 + agentId * 0.1)), (int)(Const.HEIGHT * 0.5), (int)(Const.WIDTH * 0.1), (int)(Const.WIDTH * 0.1));
+            agentButton.setColor(Color.BLACK);
+            agentButton.setHoverColor(Color.BLACK);
+            agentButton.setTextColor(Color.BLACK);
+            this.buttons.put("agent" + agentId, agentButton);
+        }
+
+        Button readyButton = new ReadyButton(this.mouse);
     }
     public void update() {
         while (!this.messenger.isEmpty()) {
@@ -78,6 +88,9 @@ public class MenuState extends State {
                     break;
                 case "TEAM":
                     this.team(args);
+                    break;
+                case "JOINED":
+                    this.joined(args);
                     break;
                 case "AGENT":
                     this.agent(args);
@@ -152,6 +165,13 @@ public class MenuState extends State {
             this.buttons.get("blue").setHoverColor(Color.LIGHT_GRAY);
         }
     }
+    private void joined(String[] args) {
+        this.buttons.get("red").setActive(false);
+        this.buttons.get("blue").setActive(false);
+        for (int agentId = 0; agentId < Agent.values().length; agentId++) {
+            this.buttons.get("agent" + agentId).setActive(true);
+        }
+    }
     private void agent(String[] args) {
         this.players[Integer.valueOf(args[0])].setAgent(Integer.valueOf(args[1]));
     }
@@ -177,7 +197,7 @@ public class MenuState extends State {
             super.draw(g);
             if (this.active) {
                 g.setColor(Color.BLACK);
-                g.drawRect((int) (Const.WIDTH * 0.3), (int) (Const.HEIGHT * 0.5), (int) (Const.WIDTH * 0.4), (int) (Const.HEIGHT * 0.1));
+                g.drawRect((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.5), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
                 Text.draw(g, 40, name, Const.WIDTH * 0.31, Const.HEIGHT * 0.56);
                 if (caret.isActive()) {
                     g.drawLine((int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(name)), (int) (Const.HEIGHT * 0.52), (int) (Const.WIDTH * 0.31 + g.getFontMetrics().stringWidth(name)), (int) (Const.HEIGHT * 0.58));
@@ -222,8 +242,6 @@ public class MenuState extends State {
                 return false;
             }
             messenger.print("TEAM 0");
-            this.setActive(false);
-            buttons.get("blue").setActive(false);
             return true;
         }
     }
@@ -236,33 +254,29 @@ public class MenuState extends State {
                 return false;
             }
             messenger.print("TEAM 1");
-            this.setActive(false);
-            buttons.get("red").setActive(false);
             return true;
         }
     }
     private class AgentButton extends Button {
-        private int agent;
-        private BufferedImage image;
+        private Agent agent;
 
-        AgentButton(Mouse mouse, int agent, String imagePath) {
+        AgentButton(Mouse mouse, Agent agent) {
             super(mouse);
             this.agent = agent;
-            try {
-                this.image = ImageIO.read(new File(imagePath));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         public void draw(Graphics g) {
             super.draw(g);
-            g.drawImage(this.image, this.x, this.y, this.width, this.height, null);
+            if (!this.isActive()) {
+                return;
+            }
+            g.drawImage(this.agent.getIcon(), this.x, this.y, this.width, this.height, null);
         }
         public boolean run() {
             if (ready) {
                 return false;
             }
             messenger.print("AGENT " + this.agent);
+            buttons.get("ready").setActive(true);
             return true;
         }
     }
