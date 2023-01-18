@@ -29,13 +29,13 @@ public class Client {
     }
     // set up the game window
     public void setup() {
-        window.setSize(Const.WIDTH, Const.HEIGHT);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         gamePanel.addKeyListener(keyboard);
         gamePanel.addMouseListener(mouse);
         gamePanel.addMouseMotionListener(mouse);        
         window.add(gamePanel); 
+        window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
@@ -53,6 +53,7 @@ public class Client {
     //draw everything
     public class GamePanel extends JPanel {
         GamePanel() {
+            setPreferredSize(new Dimension(Const.WIDTH, Const.HEIGHT));
             setFocusable(true);
             requestFocusInWindow();
         }
