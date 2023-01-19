@@ -7,7 +7,7 @@ public abstract class State {
     Messenger messenger;
 
     private boolean active;
-    protected Object[] nextArgs;
+    private Object[] nextArgs;
 
     protected HashMap<String, Button> buttons;
 
@@ -23,11 +23,15 @@ public abstract class State {
     public boolean isActive() {
         return this.active;
     }
-    public Object[] next() {
+    public Object[] getNextArgs() {
         return this.nextArgs;
+    }
+    public void setNextArgs(Object[] nextArgs) {
+        this.nextArgs = nextArgs;
     }
     public void setup() {
         this.active = true;
+        this.nextArgs = null;
     }
     public void close() {
         this.buttons.clear();

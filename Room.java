@@ -27,9 +27,19 @@ public class Room {
         
     }
     public void addObstacle(Obstacle obstacle) {
-        
+        for (int i = 0; i < this.obstacles.length; i++) {
+            if (this.obstacles[i] != null) {
+                this.obstacles[i] = obstacle;
+                break;
+            }
+        }
     }
     public void addDoor(Door door) {
-
+        for (int i = 0; i < this.doors.length; i++) {
+            if (this.doors[i] != null) {
+                this.doors[i] = door;
+                break;
+            }
+        }
     }
 }

@@ -14,7 +14,6 @@ public class MenuState extends State {
     Caret caret;
     String name;
     boolean nameSet;
-    boolean ready;
 
     MenuState(Keyboard keyboard, Mouse mouse, Messenger messenger) {
         super(keyboard, mouse, messenger);
@@ -35,7 +34,6 @@ public class MenuState extends State {
         this.caret = new Caret();
         this.name = "";
         this.nameSet = false;
-        this.ready = false;
 
         Button nameButton = new NameButton(this.mouse);
         nameButton.setBounds((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.65), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
@@ -150,6 +148,10 @@ public class MenuState extends State {
     }
     public void close() {
         super.close();
+        this.setNextArgs(new Object[] {
+            this.id,
+            this.players,
+        });
     }
     private void id(String[] args) {
         this.id = Integer.valueOf(args[0]);
@@ -277,13 +279,13 @@ public class MenuState extends State {
                 return;
             }
             g.drawImage(this.agent.getIcon(), this.x, this.y, this.width, this.height, null);
-            if (ready) {
-                g.setColor(new Color(80, 80, 80, 99));
+            if (players[id].isReady()) {
+                g.setColor(new Color(80, 80, 80, 240));
                 g.fillRect(this.x, this.y, this.width, this.height);
             }
         }
         public boolean run() {
-            if (ready) {
+            if (players[id].isReady()) {
                 return false;
             }
             messenger.print("AGENT " + this.agent);
@@ -296,10 +298,6 @@ public class MenuState extends State {
             super(mouse);
         }
         public boolean run() {
-            if (ready || players[id].getAgent() == null) {
-                return false;
-            }
-            ready = true;
             messenger.print("READY");
             this.setActive(false);
             return true;

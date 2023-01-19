@@ -35,7 +35,7 @@ public class StateMachine {
     }
     public void nextState() {
         // Arguments passed from previous state to next state
-        Object[] args = this.states[current].next();
+        Object[] args = this.states[current].getNextArgs();
         this.current++;
         this.states[current].setup(args);
     }
