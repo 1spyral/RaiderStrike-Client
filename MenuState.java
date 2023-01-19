@@ -180,7 +180,7 @@ public class MenuState extends State {
         }
     }
     private void agent(String[] args) {
-        this.players[Integer.valueOf(args[0])].setAgent(Integer.valueOf(args[1]));
+        this.players[Integer.valueOf(args[0])].setAgent(Agent.valueOf(args[1]));
     }
     private void name(String[] args) {
         String fullName = "";
@@ -277,6 +277,10 @@ public class MenuState extends State {
                 return;
             }
             g.drawImage(this.agent.getIcon(), this.x, this.y, this.width, this.height, null);
+            if (ready) {
+                g.setColor(new Color(80, 80, 80, 99));
+                g.fillRect(this.x, this.y, this.width, this.height);
+            }
         }
         public boolean run() {
             if (ready) {
@@ -292,7 +296,7 @@ public class MenuState extends State {
             super(mouse);
         }
         public boolean run() {
-            if (ready || players[id].getAgent() != -1) {
+            if (ready || players[id].getAgent() == null) {
                 return false;
             }
             ready = true;

@@ -1,7 +1,7 @@
 public class Player {
     protected String name;
     protected int team;
-    protected int agent;
+    protected Agent agent;
     protected boolean ready;
     
     protected boolean alive;
@@ -11,14 +11,11 @@ public class Player {
     protected int y;
     
     Player() {
-        this.name = null;
         this.team = -1;
-        this.agent = -1;
         this.ready = false;
 
         this.alive = false;
         this.room = -1;
-        this.gun = null;
         this.x = -1;
         this.y = -1;
     }
@@ -32,10 +29,10 @@ public class Player {
     public void setTeam(int team) {
         this.team = team;
     }
-    public int getAgent() {
+    public Agent getAgent() {
         return this.agent;
     }
-    public void setAgent(int agent) {
+    public void setAgent(Agent agent) {
         this.agent = agent;
     }
     public boolean isReady() {
