@@ -8,20 +8,32 @@ public class Room {
     private Obstacle[] obstacles;
     private Door[] doors;
 
-    Room(Color color, Color obstacleColor, Color penetrableObstacleColor, int width, int height, int obstacleCount, int doorCount) {
+    public void setColor(Color color) {
         this.color = color;
+    }
+    public void setObstacleColor(Color obstacleColor) {
         this.obstacleColor = obstacleColor;
+    }
+    public void setPenetrableObstacleColor(Color penetrableObstacleColor) {
         this.penetrableObstacleColor = penetrableObstacleColor;
-        this.width = width;
-        this.height = height;
-        this.obstacles = new Obstacle[obstacleCount];
-        this.doors = new Door[doorCount];
     }
     public int getWidth() {
         return this.width;
     }
+    public void setWidth(int width) {
+        this.width = width;
+    }
     public int getHeight() {
         return this.height;
+    }
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    public void setObstacleCount(int obstacleCount) {
+        this.obstacles = new Obstacle[obstacleCount];
+    }
+    public void setDoorCount(int doorCount) {
+        this.doors = new Door[doorCount];
     }
     public void draw(Graphics g, Player[] players, GameObject[] gameObjects) {
         
