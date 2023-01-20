@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Player {
     protected String name;
     protected int team;
@@ -5,19 +7,20 @@ public class Player {
     protected boolean ready;
     
     protected boolean alive;
-    protected int room;
+    protected Room room;
     protected GunModel gun;
     protected int x;
     protected int y;
+    protected int health;
     
     Player() {
         this.team = -1;
         this.ready = false;
 
         this.alive = false;
-        this.room = -1;
         this.x = -1;
         this.y = -1;
+        this.health = 100;
     }
 
     public String getName() {
@@ -47,11 +50,17 @@ public class Player {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
-    public int getRoom() {
+    public Room getRoom() {
         return this.room;
     }
-    public void setRoom(int room) {
+    public void setRoom(Room room) {
         this.room = room;
+    }
+    public GunModel getGun() {
+        return this.gun;
+    }
+    public void setGun(GunModel gun) {
+        this.gun = gun;
     }
     public int getX() {
         return this.x;
@@ -64,5 +73,14 @@ public class Player {
     }
     public void setY(int y) {
         this.y = y;
+    }
+    public int getHealth() {
+        return this.health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    public void draw(Graphics g, int xCorner, int yCorner) {
+
     }
 }

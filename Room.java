@@ -36,7 +36,11 @@ public class Room {
         this.doors = new Door[doorCount];
     }
     public void draw(Graphics g, Player[] players, GameObject[] gameObjects) {
-        
+        int xCorner = (Const.WIDTH - this.width) / 2;
+        int yCorner = (Const.HEIGHT - this.height) / 2;
+        g.fillRect(xCorner, yCorner, Const.WIDTH, Const.HEIGHT);
+        for (Player player: players) {
+        }
     }
     public void addObstacle(Obstacle obstacle) {
         for (int i = 0; i < this.obstacles.length; i++) {
