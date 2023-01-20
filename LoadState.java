@@ -8,6 +8,8 @@ public class LoadState extends State {
     Map map;
     Loader loader;
 
+    String text;
+
     LoadState(Keyboard keyboard, Mouse mouse, Messenger messenger) {
         super(keyboard, mouse, messenger);
     }
@@ -50,7 +52,7 @@ public class LoadState extends State {
         if (this.map != null) {
             Text.draw(g, 20, map.getName(), 100, 100);
             if (this.map.getRooms() != null) {
-                Text.draw(g, 20, "Loading rooms", 100, 200);
+                Text.draw(g, 20, this.text, 100, 200);
             }
         } else {
             Text.draw(g, 20, "Awaiting server", 100, 100);
@@ -87,15 +89,21 @@ public class LoadState extends State {
 
     private class Loader extends LinkedList<String> implements Runnable {
         public void run() {
+            // Read the map name
             map.setName(this.nextLine());
+            // Read the room count
             int roomCount = Integer.valueOf(this.nextLine());
             map.setRoomCount(roomCount);
+            text = "Loading rooms";
+            // Read the spawn rooms
             int defenderSpawn = Integer.valueOf(this.nextLine());
             int attackerSpawn = Integer.valueOf(this.nextLine());
+            // Read the plant sites
             HashSet<Integer> bombRooms = new HashSet<Integer>();
             for (String roomId: this.nextLine().split(" ")) {
                 bombRooms.add(Integer.valueOf(roomId));
             }
+            // Load each room
             for (int roomId = 0; roomId < roomCount; roomId++) {
                 Room room;
                 if (roomId == defenderSpawn || roomId == attackerSpawn) {
@@ -135,7 +143,7 @@ public class LoadState extends State {
             messenger.print("LOADED");
         }
         private String nextLine() {
-            while (this.isEmpty()) {};
+            while (this.isEmpty()) {try {Thread.sleep(10);} catch (Exception e) {}};
             return this.poll();
         }
     }
