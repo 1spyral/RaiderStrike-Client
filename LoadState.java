@@ -39,7 +39,6 @@ public class LoadState extends State {
                 this.loader.add(messageText);
                 break;
         }
-
     }
     public void type(char key) {
 
@@ -59,6 +58,11 @@ public class LoadState extends State {
     }
     public void close() {
         super.close();
+        this.setNextArgs(new Object[] {
+            this.id,
+            this.players,
+            this.map
+        });
     }
     /* Server-Client commands */
     private void agent(String[] args) {
