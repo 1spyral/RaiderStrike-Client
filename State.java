@@ -38,7 +38,20 @@ public abstract class State {
         this.active = false;
     }
     public abstract void setup(Object[] args);
-    public abstract void update();
+    public void update() {
+        while (!this.messenger.isEmpty() && this.isActive()) {
+            this.message(this.messenger.poll());
+        }
+        while (this.keyboard.hasNext() && this.isActive()) {
+            this.type(this.keyboard.next());
+        }
+        while (this.mouse.hasNext() && this.isActive()) {
+            this.click(this.mouse.poll());
+        }
+    }
+    public abstract void message(String messageText);
+    public abstract void type(char key);
+    public abstract void click(Mouse.Click click);
     public void draw(Graphics g) {
         for (Button button: this.buttons.values()) {
             button.draw(g);

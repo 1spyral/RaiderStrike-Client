@@ -13,7 +13,6 @@ public class MenuState extends State {
     int blue;
     Caret caret;
     String name;
-    boolean nameSet;
 
     MenuState(Keyboard keyboard, Mouse mouse, Messenger messenger) {
         super(keyboard, mouse, messenger);
@@ -33,7 +32,6 @@ public class MenuState extends State {
         this.blue = 0;
         this.caret = new Caret();
         this.name = "";
-        this.nameSet = false;
 
         Button nameButton = new NameButton(this.mouse);
         nameButton.setBounds((int)(Const.WIDTH * 0.3), (int)(Const.HEIGHT * 0.65), (int)(Const.WIDTH * 0.4), (int)(Const.HEIGHT * 0.1));
@@ -80,58 +78,57 @@ public class MenuState extends State {
         this.buttons.put("ready", readyButton);
     }
     public void update() {
-        while (!this.messenger.isEmpty() && this.isActive()) {
-            String[] message = this.messenger.poll().split(" ");
-            String command = message[0];
-            String[] args = Arrays.copyOfRange(message, 1, message.length);
-            switch (command) {
-                case "ID":
-                    this.id(args);
-                    break;
-                case "PLAYER":
-                    this.player(args);
-                    break;
-                case "TEAM":
-                    this.team(args);
-                    break;
-                case "JOINED":
-                    this.joined(args);
-                    break;
-                case "AGENT":
-                    this.agent(args);
-                    break;
-                case "NAME":
-                    this.name(args);
-                    break;
-                case "READY":
-                    this.ready(args);
-                    break;
-                case "START":
-                    this.start(args);
-                    break;
-            }
-        }
-        while (this.keyboard.hasNext() && this.isActive()) {
-            char key = this.keyboard.next();
-            if (this.buttons.get("name").isActive()) {
-                ((NameButton)this.buttons.get("name")).type(key);
-            }
-        }
-        while (this.mouse.hasNext() && this.isActive()) {
-            Mouse.Click click = this.mouse.poll();
-            for (Button button: this.buttons.values()) {
-                if (button.click(click)) {
-                    break;
-                }
-            }
-        }
+        super.update();
         this.caret.update();
+    }
+    public void message(String messageText) {
+        String[] message = messageText.split(" ");
+        String command = message[0];
+        String[] args = Arrays.copyOfRange(message, 1, message.length);
+        switch (command) {
+            case "ID":
+                this.id(args);
+                break;
+            case "PLAYER":
+                this.player(args);
+                break;
+            case "TEAM":
+                this.team(args);
+                break;
+            case "JOINED":
+                this.joined(args);
+                break;
+            case "AGENT":
+                this.agent(args);
+                break;
+            case "NAME":
+                this.name(args);
+                break;
+            case "READY":
+                this.ready(args);
+                break;
+            case "START":
+                this.start(args);
+                break;
+        }
+    }
+    public void type(char key) {
+        if (this.buttons.get("name").isActive()) {
+            ((NameButton)this.buttons.get("name")).type(key);
+        }
+    }
+    public void click(Mouse.Click click) {
+        for (Button button: this.buttons.values()) {
+            if (button.click(click)) {
+                break;
+            }
+        }
     }
     public void draw(Graphics g) {
         super.draw(g);
         ((Graphics2D) g).setStroke(new BasicStroke(3));
         g.setColor(Color.BLACK);
-        if (this.nameSet) {
+        if (this.id != -1 && this.players[this.id].getName() != null) {
 
         } 
         else {
@@ -192,6 +189,10 @@ public class MenuState extends State {
         }
         fullName = fullName.trim();
         this.players[Integer.valueOf(args[0])].setName(fullName);
+        if (Integer.valueOf(args[0]) == this.id) {
+            this.buttons.get("red").setActive(true);
+            this.buttons.get("blue").setActive(true);
+        }
     }
     private void ready(String[] args) {
         this.players[Integer.valueOf(args[0])].lock();
@@ -220,10 +221,7 @@ public class MenuState extends State {
                 return false;
             }
             messenger.print("NAME " + name);
-            nameSet = true;
             this.setActive(false);
-            buttons.get("red").setActive(true);
-            buttons.get("blue").setActive(true);
             return true;
         }
         public void type(char key) {

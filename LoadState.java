@@ -18,36 +18,34 @@ public class LoadState extends State {
         this.map = null;
         this.loader = null;
     }
-    public void update() {
-        while (!this.messenger.isEmpty() && this.isActive()) {
-            String messageText = this.messenger.poll();
-            String[] message = messageText.split(" ");
-            String command = message[0];
-            String[] args = Arrays.copyOfRange(message, 1, message.length);
-            switch (command) {
-                case "AGENT":
-                    this.agent(args);
-                    break;
-                case "NAME":
-                    this.name(args);
-                    break;
-                case "MAP":
-                    this.map(args);
-                    break;
-                case "START":
-                    this.start(args);
-                    break;
-                default:
-                    this.loader.add(messageText);
-                    break;
-            }
+    public void message(String messageText) {
+        String[] message = messageText.split(" ");
+        String command = message[0];
+        String[] args = Arrays.copyOfRange(message, 1, message.length);
+        switch (command) {
+            case "AGENT":
+                this.agent(args);
+                break;
+            case "NAME":
+                this.name(args);
+                break;
+            case "MAP":
+                this.map(args);
+                break;
+            case "START":
+                this.start(args);
+                break;
+            default:
+                this.loader.add(messageText);
+                break;
         }
-        while (this.keyboard.hasNext() && this.isActive()) {
-            char key = this.keyboard.next();
-        }
-        while (this.mouse.hasNext() && this.isActive()) {
-            Mouse.Click click = this.mouse.poll();
-        }
+
+    }
+    public void type(char key) {
+
+    }
+    public void click(Mouse.Click click) {
+
     }
     public void draw(Graphics g) {
         if (this.map != null) {
