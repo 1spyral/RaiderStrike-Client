@@ -153,6 +153,7 @@ public class MenuState extends State {
             this.players,
         });
     }
+    /* Server-Client commands */
     private void id(String[] args) {
         this.id = Integer.valueOf(args[0]);
         this.buttons.get("name").setActive(true);
@@ -198,6 +199,7 @@ public class MenuState extends State {
     private void start(String[] args) {
         this.close();
     }
+    
     private class NameButton extends Button {
         NameButton(Mouse mouse) {
             super(mouse);

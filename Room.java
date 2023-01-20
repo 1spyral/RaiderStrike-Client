@@ -1,12 +1,12 @@
 import java.awt.*;
 public class Room {
-    private Color color;
-    private Color obstacleColor;
-    private Color penetrableObstacleColor;
-    private int width;
-    private int height;
-    private Obstacle[] obstacles;
-    private Door[] doors;
+    protected Color color;
+    protected Color obstacleColor;
+    protected Color penetrableObstacleColor;
+    protected int width;
+    protected int height;
+    protected Obstacle[] obstacles;
+    protected Door[] doors;
 
     public void setColor(Color color) {
         this.color = color;
