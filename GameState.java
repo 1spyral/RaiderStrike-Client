@@ -6,6 +6,8 @@ public class GameState extends State {
     Player[] players;
     Map map;
 
+    int creds;
+
     GameState(Keyboard keyboard, Mouse mouse, Messenger messenger) {
         super(keyboard, mouse, messenger);
     }
@@ -69,13 +71,13 @@ public class GameState extends State {
         
     }
     public void creds(String[] args) {
-
+        this.creds = Integer.valueOf(args[0]);
     }
     public void buy_end(String[] args) {
 
     }
     public void kill(String[] args) {
-
+        
     }
     public void death(String[] args) {
         
