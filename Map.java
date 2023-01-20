@@ -19,8 +19,9 @@ public class Map {
     }
     public void addRoom(Room room) {
         for (int i = 0; i < this.rooms.length; i++) {
-            if (this.rooms[i] != null) {
+            if (this.rooms[i] == null) {
                 this.rooms[i] = room;
+                System.out.println("dasdjlksjd");
                 break;
             }
         }

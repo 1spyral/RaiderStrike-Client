@@ -128,7 +128,7 @@ public class MenuState extends State {
         super.draw(g);
         ((Graphics2D) g).setStroke(new BasicStroke(3));
         g.setColor(Color.BLACK);
-        if (this.id != -1 && this.players[this.id].getName() != null) {
+        if (this.id != -1 && this.players[this.id] != null && this.players[this.id].getName() != null) {
 
         } 
         else {

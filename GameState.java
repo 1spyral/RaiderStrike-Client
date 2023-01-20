@@ -6,7 +6,7 @@ public class GameState extends State {
     Player[] players;
     Map map;
 
-    GameObject[] objects;
+    LinkedList<GameObject> objects;
 
     int creds;
     Sidearm sidearm;
@@ -14,6 +14,11 @@ public class GameState extends State {
     Gun currentGun;
 
     boolean playing;
+
+    MinimapPanel minimapPanel;
+    PlayersPanel playerPanel;
+    TimePanel timePanel;
+    WeaponsPanel weaponsPanel;
 
     GameState(Keyboard keyboard, Mouse mouse, Messenger messenger) {
         super(keyboard, mouse, messenger);
@@ -23,6 +28,13 @@ public class GameState extends State {
         this.id = (int)args[0];
         this.players = (Player[])args[1];
         this.map = (Map)args[2];
+
+        this.objects = new LinkedList<GameObject>();
+
+        this.minimapPanel = new MinimapPanel();
+        this.playerPanel = new PlayersPanel(this.players);
+        this.timePanel = new TimePanel();
+        this.weaponsPanel = new WeaponsPanel(this.players[this.id]);
     }
     public void update() {
         super.update();
@@ -101,11 +113,11 @@ public class GameState extends State {
 
     }
     public void draw(Graphics g) {
-        
+        this.weaponsPanel.draw(g);
         if (!this.playing) {
 
         } else {
-            this.map.getRooms()[this.players[this.id].getRoom()].draw(g, this.players, this.objects);
+            this.players[this.id].getRoom().draw(g, this.players, this.objects);
         }
     }
     public void close() {
@@ -113,7 +125,7 @@ public class GameState extends State {
     }
     /* Server-Client commands */
     public void round_start(String[] args) {
-        
+        this.playing = true;
     }
     public void creds(String[] args) {
         this.creds = Integer.valueOf(args[0]);
@@ -129,7 +141,7 @@ public class GameState extends State {
         // TODO: kill feed
     }
     public void player_room(String[] args) {
-        this.players[Integer.valueOf(args[0])].setRoom(Integer.valueOf(args[1]));
+        this.players[Integer.valueOf(args[0])].setRoom(this.map.getRooms()[Integer.valueOf(args[1])]);
     }
     public void player_location(String[] args) {
         this.players[Integer.valueOf(args[0])].setX(Integer.valueOf(args[1]));
@@ -173,5 +185,31 @@ public class GameState extends State {
     }
     public void plant(String[] args) {
         
+    }
+    private class MinimapPanel {
+
+    }
+    private class PlayersPanel {
+        Player[] players;
+
+        PlayersPanel(Player[] players) {
+            this.players = players;
+        }
+        public void draw(Graphics g) {
+            
+        }
+    }
+    private class TimePanel {
+        
+    }
+    private class WeaponsPanel {
+        Player player;
+
+        WeaponsPanel(Player player) {
+            this.player = player;
+        }
+        public void draw(Graphics g) {
+            g.drawRect((int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.6), (int)(Const.WIDTH * 0.25 - Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.35));
+        }
     }
 }
