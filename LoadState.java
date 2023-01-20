@@ -19,7 +19,7 @@ public class LoadState extends State {
         this.loader = null;
     }
     public void update() {
-        while (!this.messenger.isEmpty()) {
+        while (!this.messenger.isEmpty() && this.isActive()) {
             String messageText = this.messenger.poll();
             String[] message = messageText.split(" ");
             String command = message[0];
@@ -33,6 +33,7 @@ public class LoadState extends State {
                     break;
                 case "MAP":
                     this.map(args);
+                    break;
                 case "START":
                     this.start(args);
                     break;
@@ -41,9 +42,22 @@ public class LoadState extends State {
                     break;
             }
         }
+        while (this.keyboard.hasNext() && this.isActive()) {
+            char key = this.keyboard.next();
+        }
+        while (this.mouse.hasNext() && this.isActive()) {
+            Mouse.Click click = this.mouse.poll();
+        }
     }
     public void draw(Graphics g) {
-        // TODO: draw
+        if (this.map != null) {
+            Text.draw(g, 20, map.getName(), 100, 100);
+            if (this.map.getRooms() != null) {
+                Text.draw(g, 20, "Loading rooms", 100, 200);
+            }
+        } else {
+            Text.draw(g, 20, "Awaiting server", 100, 100);
+        }
     }
     public void close() {
         super.close();
@@ -119,7 +133,7 @@ public class LoadState extends State {
             messenger.print("LOADED");
         }
         private String nextLine() {
-            while (!this.isEmpty()) {};
+            while (this.isEmpty()) {};
             return this.poll();
         }
     }

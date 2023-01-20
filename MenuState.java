@@ -80,7 +80,7 @@ public class MenuState extends State {
         this.buttons.put("ready", readyButton);
     }
     public void update() {
-        while (!this.messenger.isEmpty()) {
+        while (!this.messenger.isEmpty() && this.isActive()) {
             String[] message = this.messenger.poll().split(" ");
             String command = message[0];
             String[] args = Arrays.copyOfRange(message, 1, message.length);
@@ -111,13 +111,13 @@ public class MenuState extends State {
                     break;
             }
         }
-        while (this.keyboard.hasNext()) {
+        while (this.keyboard.hasNext() && this.isActive()) {
             char key = this.keyboard.next();
             if (this.buttons.get("name").isActive()) {
                 ((NameButton)this.buttons.get("name")).type(key);
             }
         }
-        while (this.mouse.hasNext()) {
+        while (this.mouse.hasNext() && this.isActive()) {
             Mouse.Click click = this.mouse.poll();
             for (Button button: this.buttons.values()) {
                 if (button.click(click)) {
@@ -199,7 +199,7 @@ public class MenuState extends State {
     private void start(String[] args) {
         this.close();
     }
-    
+
     private class NameButton extends Button {
         NameButton(Mouse mouse) {
             super(mouse);
