@@ -12,10 +12,11 @@ public class GameState extends State {
     int creds;
     Sidearm sidearm;
     Primary primary;
-    Gun currentGun;
 
     boolean playing;
     int direction;
+    int angle;
+    int held; // 1 - primary, 2 - sidearm
 
     MinimapPanel minimapPanel;
     PlayersPanel playerPanel;
@@ -43,6 +44,7 @@ public class GameState extends State {
         super.update();
 
         if (this.playing) {
+            // Calculate what direction the player is moving
             if (this.keyboard.isHeld(KeyEvent.VK_W) && this.keyboard.isHeld(KeyEvent.VK_D)) {
                 this.setDirection(5);
             } else if (this.keyboard.isHeld(KeyEvent.VK_W) && this.keyboard.isHeld(KeyEvent.VK_A)) {
@@ -62,6 +64,8 @@ public class GameState extends State {
             } else {
                 this.setDirection(0);
             }
+            // Calculate what angle the player is aiming
+            this.setAngle(this.calculateAngle());
         }
     }
     public void message(String messageText) {
@@ -129,13 +133,33 @@ public class GameState extends State {
             case "PLANT":
                 this.plant(args);
                 break;
+            case "WIN":
+                this.win(args);
+                break;
         }
     }
     public void type(char key) {
-
+        if (this.playing) {
+            if (key == '1') {
+                if (this.primary != null) {
+                    this.held = 1;
+                }
+            } else if (key == '2') {
+                this.held = 2;
+            }
+        }
     }
     public void click(Mouse.Click click) {
-
+        for (Button button: this.buttons.values()) {
+            if (button.click(click)) {
+                break;
+            }
+        }
+        if (this.playing) {
+            if (click.getButton() == MouseEvent.BUTTON1) {
+                
+            }
+        }
     }
     public void draw(Graphics g) {
         this.weaponsPanel.draw(g);
@@ -148,11 +172,36 @@ public class GameState extends State {
     public void close() {
         super.close();
     }
+    private Gun getGun(int slot) {
+        if (slot == 1) {
+            return this.primary;
+        } else {
+            return this.sidearm;
+        }
+    }
     private void setDirection(int direction) {
         if (this.direction != direction) {
             this.direction = direction;
             this.messenger.print("MOVE " + this.direction);
         }
+    }
+    private void setAngle(int angle) {
+        if (this.angle != angle) {
+            this.angle = angle;
+            this.messenger.print("AIM " + this.angle);
+        }
+    }
+    private int calculateAngle() {
+        int principleAngle = (int)(Math.atan( (double)(this.mouse.getY() - (double)Const.HEIGHT/2) / (this.mouse.getX() - (double)Const.WIDTH/2)) * (180 / Math.PI));
+        int raa = Math.abs(principleAngle); // related acute angle
+        if (this.mouse.getX() >= (double)Const.WIDTH/2 && this.mouse.getY() >= (double)Const.HEIGHT/2) return raa;
+        else if (this.mouse.getX() < (double)Const.WIDTH/2 && this.mouse.getY() >= (double)Const.HEIGHT/2) return 180 - raa;
+        else if (this.mouse.getX() < (double)(Const.WIDTH)/2 && this.mouse.getY() < (double)Const.HEIGHT/2) return 180 + raa;
+        else return 360 - raa;
+    }
+    private void nextRound() {
+        this.playing = false;
+        this.objects = new LinkedList<GameObject>();
     }
     /* Server-Client commands */
     public void round_start(String[] args) {
@@ -182,41 +231,45 @@ public class GameState extends State {
         this.players[Integer.valueOf(args[0])].setGun(GunModel.valueOf(args[1]));
     }
     public void object(String[] args) {
-        
+        // TODO
     }
     public void object_room(String[] args) {
-        
+        // TODO
     }
     public void object_location(String[] args) {
-        
+        // TODO
     }
     public void object_remove(String[] args) {
-        
+        // TODO
     }
     public void bullet(String[] args) {
-        
+        // TODO
     }
     public void gun(String[] args) {
-        
+        // TODO
     }
     public void pickup(String[] args) {
-        
+        // TODO
     }
     public void ammo(String[] args) {
-        currentGun.setAmmo(Integer.valueOf(args[0]));
+        this.getGun(Integer.valueOf(args[0])).setAmmo(Integer.valueOf(args[1]));
     }
     public void health(String[] args) {
         this.players[Integer.valueOf(args[0])].setHealth(Integer.valueOf(args[1]));
     }
     public void damage(String[] args) {
-        
+        // TODO
     }
     public void audio(String[] args) {
-        
+        // TODO
     }
     public void plant(String[] args) {
-        
+        // TODO
     }
+    public void win(String[] args) {
+        this.nextRound();
+    }
+
     private class MinimapPanel {
 
     }

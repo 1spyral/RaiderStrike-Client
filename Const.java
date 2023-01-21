@@ -8,7 +8,7 @@ public class Const {
 
     public static final int MAX_NAME_LENGTH = 24;
 
-    public static final int PLAYER_RADIUS = 10;
+    public static final int PLAYER_RADIUS = 30;
 
     private Const(){}
 }
