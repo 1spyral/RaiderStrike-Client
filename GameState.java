@@ -14,9 +14,10 @@ public class GameState extends State {
     Primary primary;
 
     boolean playing;
+    boolean shooting;
     int direction;
     int angle;
-    int held; // 1 - primary, 2 - sidearm
+    int heldGun; // 1 - primary, 2 - sidearm
 
     MinimapPanel minimapPanel;
     PlayersPanel playerPanel;
@@ -44,6 +45,8 @@ public class GameState extends State {
         super.update();
 
         if (this.playing) {
+            // Determine if the player is shooting
+            this.setShooting(this.mouse.isPressed(MouseEvent.BUTTON1));
             // Calculate what direction the player is moving
             if (this.keyboard.isHeld(KeyEvent.VK_W) && this.keyboard.isHeld(KeyEvent.VK_D)) {
                 this.setDirection(5);
@@ -145,10 +148,10 @@ public class GameState extends State {
         if (this.playing) {
             if (key == '1') {
                 if (this.primary != null) {
-                    this.held = 1;
+                    this.heldGun = 1;
                 }
             } else if (key == '2') {
-                this.held = 2;
+                this.heldGun = 2;
             }
         }
     }
@@ -180,6 +183,12 @@ public class GameState extends State {
             return this.primary;
         } else {
             return this.sidearm;
+        }
+    }
+    private void setShooting(boolean shooting) {
+        if (this.shooting ^ shooting) {
+            this.shooting = shooting;
+            this.messenger.print("FIRE " + (this.shooting ? 1 : 0));
         }
     }
     private void setDirection(int direction) {
