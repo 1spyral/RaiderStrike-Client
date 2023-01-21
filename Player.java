@@ -93,6 +93,7 @@ public class Player {
         this.damageFrames--;
     }
     public void draw(Graphics g, int xCorner, int yCorner) {
-
+        g.setColor(Color.YELLOW);
+        g.fillOval(xCorner + this.getX() - Const.PLAYER_RADIUS, yCorner + this.getY() - Const.PLAYER_RADIUS, Const.PLAYER_RADIUS * 2, Const.PLAYER_RADIUS * 2);
     }
 }

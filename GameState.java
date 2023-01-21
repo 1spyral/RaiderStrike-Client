@@ -195,12 +195,7 @@ public class GameState extends State {
         }
     }
     private int calculateAngle() {
-        int principleAngle = (int)(Math.atan( (double)(this.mouse.getY() - (double)Const.HEIGHT/2) / (this.mouse.getX() - (double)Const.WIDTH/2)) * (180 / Math.PI));
-        int raa = Math.abs(principleAngle); // related acute angle
-        if (this.mouse.getX() >= (double)Const.WIDTH/2 && this.mouse.getY() >= (double)Const.HEIGHT/2) return raa;
-        else if (this.mouse.getX() < (double)Const.WIDTH/2 && this.mouse.getY() >= (double)Const.HEIGHT/2) return 180 - raa;
-        else if (this.mouse.getX() < (double)(Const.WIDTH)/2 && this.mouse.getY() < (double)Const.HEIGHT/2) return 180 + raa;
-        else return 360 - raa;
+        return (int)(Math.toDegrees(Math.atan2(Const.HEIGHT / 2 - mouse.getY(), mouse.getX() - Const.WIDTH / 2)) + 360) % 360;
     }
     private void nextRound() {
         this.playing = false;
