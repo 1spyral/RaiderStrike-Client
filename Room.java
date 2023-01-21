@@ -48,6 +48,13 @@ public class Room {
                 g.fillOval(xCorner + player.getX() - Const.PLAYER_RADIUS, yCorner + player.getY() - Const.PLAYER_RADIUS, Const.PLAYER_RADIUS, Const.PLAYER_RADIUS);
             }
         }
+        for (GameObject object: objects) {
+            if (object.getRoom() != null && object.getRoom().equals(this)) {
+                object.draw(g, xCorner, yCorner);
+            }
+        }
+        g.setColor(Color.WHITE);
+        g.drawRect(xCorner, yCorner, this.width, this.height);
     }
     public void addObstacle(Obstacle obstacle) {
         for (int i = 0; i < this.obstacles.length; i++) {

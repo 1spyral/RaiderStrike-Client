@@ -11,7 +11,10 @@ public class Player {
     protected GunModel gun;
     protected int x;
     protected int y;
+    protected int angle;
     protected int health;
+
+    protected int damageFrames;
     
     Player() {
         this.team = -1;
@@ -74,11 +77,20 @@ public class Player {
     public void setY(int y) {
         this.y = y;
     }
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
     public int getHealth() {
         return this.health;
     }
     public void setHealth(int health) {
         this.health = health;
+    }
+    public void damaged() {
+        this.damageFrames = 30;
+    }
+    public void update() {
+        this.damageFrames--;
     }
     public void draw(Graphics g, int xCorner, int yCorner) {
 

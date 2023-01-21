@@ -97,6 +97,9 @@ public class GameState extends State {
             case "PLAYER_GUN":
                 this.player_gun(args);
                 break;
+            case "PLAYER_TURN":
+                this.player_turn(args);
+                break;
             case "OBJECT":
                 this.object(args);
                 break;
@@ -230,17 +233,22 @@ public class GameState extends State {
     public void player_gun(String[] args) {
         this.players[Integer.valueOf(args[0])].setGun(GunModel.valueOf(args[1]));
     }
+    public void player_turn(String[] args) {
+        this.players[Integer.valueOf(args[0])].setAngle(Integer.valueOf(args[1]));
+    }
     public void object(String[] args) {
         // TODO
     }
     public void object_room(String[] args) {
-        // TODO
+        this.objects.get(Integer.valueOf(args[0])).setRoom(this.map.getRooms()[Integer.valueOf(args[1])]);
     }
     public void object_location(String[] args) {
-        // TODO
+        GameObject object = this.objects.get(Integer.valueOf(args[0]));
+        object.setX(Integer.valueOf(args[1]));
+        object.setY(Integer.valueOf(args[2]));
     }
     public void object_remove(String[] args) {
-        // TODO
+        this.objects.remove(Integer.parseInt(args[0]));
     }
     public void bullet(String[] args) {
         // TODO
@@ -249,7 +257,12 @@ public class GameState extends State {
         // TODO
     }
     public void pickup(String[] args) {
-        // TODO
+        GunModel gunModel = GunModel.valueOf(args[0]);
+        if (Sidearm.isSidearm(gunModel)) {
+            this.sidearm = new Sidearm(args[0], gunModel.getMaxAmmo());
+        } else {
+            this.primary = new Primary(args[0], gunModel.getMaxAmmo());
+        }
     }
     public void ammo(String[] args) {
         this.getGun(Integer.valueOf(args[0])).setAmmo(Integer.valueOf(args[1]));
