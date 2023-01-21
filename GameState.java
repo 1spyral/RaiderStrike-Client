@@ -1,5 +1,6 @@
 import java.util.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class GameState extends State {
     int id;
@@ -14,11 +15,13 @@ public class GameState extends State {
     Gun currentGun;
 
     boolean playing;
+    int direction;
 
     MinimapPanel minimapPanel;
     PlayersPanel playerPanel;
     TimePanel timePanel;
     WeaponsPanel weaponsPanel;
+
 
     GameState(Keyboard keyboard, Mouse mouse, Messenger messenger) {
         super(keyboard, mouse, messenger);
@@ -38,6 +41,28 @@ public class GameState extends State {
     }
     public void update() {
         super.update();
+
+        if (this.playing) {
+            if (this.keyboard.isHeld(KeyEvent.VK_W) && this.keyboard.isHeld(KeyEvent.VK_D)) {
+                this.setDirection(5);
+            } else if (this.keyboard.isHeld(KeyEvent.VK_W) && this.keyboard.isHeld(KeyEvent.VK_A)) {
+                this.setDirection(6);
+            } else if (this.keyboard.isHeld(KeyEvent.VK_S) && this.keyboard.isHeld(KeyEvent.VK_A)) {
+                this.setDirection(7);
+            } else if (this.keyboard.isHeld(KeyEvent.VK_S) && this.keyboard.isHeld(KeyEvent.VK_D)) {
+                this.setDirection(8);
+            } else if (this.keyboard.isHeld(KeyEvent.VK_W)) {
+                this.setDirection(1);
+            } else if (this.keyboard.isHeld(KeyEvent.VK_S)) {
+                this.setDirection(2);
+            } else if (this.keyboard.isHeld(KeyEvent.VK_A)) {
+                this.setDirection(3);
+            } else if (this.keyboard.isHeld(KeyEvent.VK_D)) {
+                this.setDirection(4);
+            } else {
+                this.setDirection(0);
+            }
+        }
     }
     public void message(String messageText) {
         String[] message = messageText.split(" ");
@@ -122,6 +147,12 @@ public class GameState extends State {
     }
     public void close() {
         super.close();
+    }
+    private void setDirection(int direction) {
+        if (this.direction != direction) {
+            this.direction = direction;
+            this.messenger.print("MOVE " + this.direction);
+        }
     }
     /* Server-Client commands */
     public void round_start(String[] args) {
