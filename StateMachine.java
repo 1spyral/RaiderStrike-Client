@@ -1,4 +1,5 @@
 import java.awt.*;
+
 public class StateMachine {
     Keyboard keyboard;
     Mouse mouse;

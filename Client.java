@@ -36,6 +36,8 @@ public class Client {
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+        Music.play();
     }
     // main game loop
     public void start() {
