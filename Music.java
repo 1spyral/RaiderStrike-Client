@@ -1,6 +1,9 @@
 import java.io.*;
 import javax.sound.sampled.*;
 
+/*
+ * Music player - does not yet loop song
+ */
 public class Music {
     private static final String PATH = "assets/BGM.wav";
 

@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.image.*;
+import java.awt.geom.*;
 
 public class Player {
     protected String name;
@@ -21,6 +23,7 @@ public class Player {
         this.ready = false;
 
         this.alive = false;
+        this.gun = GunModel.Robin;
         this.x = -1;
         this.y = -1;
         this.health = 100;
@@ -101,5 +104,12 @@ public class Player {
     public void draw(Graphics g, int xCorner, int yCorner) {
         g.setColor(Color.YELLOW);
         g.fillOval(xCorner + this.getX() - Const.PLAYER_RADIUS, yCorner + this.getY() - Const.PLAYER_RADIUS, Const.PLAYER_RADIUS * 2, Const.PLAYER_RADIUS * 2);
+        if (this.getGun() != null) {
+            BufferedImage image = this.getGun().getTopImage();
+            AffineTransform transform = new AffineTransform();
+            transform.translate(xCorner + this.getX() - Const.PLAYER_RADIUS, yCorner + this.getY() - Const.PLAYER_RADIUS);
+            transform.rotate(-Math.toRadians(this.angle - 90), image.getWidth() / 2, image.getHeight() / 2);
+            ((Graphics2D)g).drawImage(image, transform, null);
+        }
     }
 }

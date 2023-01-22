@@ -1,5 +1,8 @@
 import java.awt.*;
 
+/*
+ * Statemachine that controls the flow of the program
+ */
 public class StateMachine {
     Keyboard keyboard;
     Mouse mouse;
@@ -14,6 +17,7 @@ public class StateMachine {
         this.messenger = messenger;
 
         this.current = 0;
+        // Initialize states
         this.states = new State[]{
             new MenuState(this.keyboard, this.mouse, this.messenger), 
             new LoadState(this.keyboard, this.mouse, this.messenger), 

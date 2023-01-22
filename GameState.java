@@ -2,20 +2,29 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * When this state is active, the game is running
+ */
 public class GameState extends State {
     int id;
     Player[] players;
     Map map;
 
+    // Credits to purchase items in the shop
     int creds;
     Sidearm sidearm;
     Primary primary;
     
+    // If the round has started
     boolean playing;
+    // If the player is shooting
     boolean shooting;
+    // The direction the player is walking - 0 means stationary
     int direction;
+    // The angle the player is looking at
     int angle;
-    int heldGun; // 1 - primary, 2 - sidearm
+    // Which weapon slot the player is holding - 1 is primary, 2 is sidearm
+    int heldGun; 
     
     LinkedList<GameObject> objects;
     LinkedList<Tracer> tracers;
@@ -47,7 +56,7 @@ public class GameState extends State {
         this.healthAmmoPanel = new HealthAmmoPanel();
         this.playerPanel = new PlayersPanel(this.players);
         this.timePanel = new TimePanel();
-        this.weaponsPanel = new WeaponsPanel(this.players[this.id]);
+        this.weaponsPanel = new WeaponsPanel();
     }
     public void update() {
         super.update();
@@ -171,6 +180,8 @@ public class GameState extends State {
             }
             if (key == 'r' || key == 'R') {
                 this.messenger.print("RELOAD");
+                
+                new Thread((new Reloader(this.heldGun == 1 ? this.primary : this.sidearm))).start();
             }
         }
     }
@@ -382,11 +393,6 @@ public class GameState extends State {
         
     }
     private class WeaponsPanel {
-        Player player;
-
-        WeaponsPanel(Player player) {
-            this.player = player;
-        }
         public void draw(Graphics g) {
             g.setColor(Color.BLACK);
             g.drawRect((int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.55), (int)(Const.WIDTH * 0.25 - Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.4));
@@ -397,6 +403,19 @@ public class GameState extends State {
                 Text.draw(g, 10, sidearm.getModel().name(), (int)(Const.WIDTH * 0.8), (int)(Const.HEIGHT * 0.7));
                 g.drawImage(sidearm.getModel().getSideImage(), (int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.7), null);
             }
+        }
+    }
+    private class Reloader implements Runnable {
+        Gun gun;
+
+        Reloader(Gun gun) {
+            this.gun = gun;
+        }
+        public void run() {
+            try {
+                Thread.sleep((long)(this.gun.getModel().getReloadSpeed() * 1000));
+            } catch (Exception e) {}
+            this.gun.setAmmo(this.gun.getModel().getMaxAmmo());
         }
     }
 }
