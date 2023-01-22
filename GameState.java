@@ -292,7 +292,7 @@ public class GameState extends State {
         this.objects.remove(Integer.parseInt(args[0]));
     }
     public void bullet(String[] args) {
-        this.tracers.add(new Tracer(this.map.getRooms()[Integer.valueOf(args[0])], this.players[Integer.valueOf(args[1])], Integer.valueOf(args[2])));
+        this.tracers.add(new Tracer(this.map.getRooms()[Integer.valueOf(args[0])], Integer.valueOf(args[1]), Integer.valueOf(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4])));
     }
     public void gun(String[] args) {
         // TODO

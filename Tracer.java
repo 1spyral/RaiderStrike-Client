@@ -2,20 +2,21 @@ import java.awt.*;
 
 public class Tracer {
     Room room;
-    int x;
-    int y;
-    int angle;
+    int x1;
+    int y1;
+    int x2;
+    int y2;
 
     long startTime;
     
-    Tracer(Room room, Player player, int angle) {
+    Tracer(Room room, int x1, int y1, int x2, int y2) {
         this.room = room;
-        this.x = player.getX();
-        this.y = player.getY();
-        this.angle = angle;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
 
         this.startTime = System.currentTimeMillis();
-
     }
 
     public Room getRoom() {
@@ -27,7 +28,7 @@ public class Tracer {
     public void draw(Graphics g, int xCorner, int yCorner) {
         if (this.isActive()) {
             g.setColor(Color.YELLOW);
-            g.drawLine(this.x + xCorner, this.y + yCorner, 1, 1);
+            g.drawLine(this.x1 + xCorner, this.y1 + yCorner, this.x2 + xCorner, this.y2 + yCorner);
         }
     }
 }
