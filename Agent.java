@@ -3,12 +3,15 @@ import java.awt.*;
 import java.awt.image.*;
 import javax.imageio.*;
 
+/**
+ * Enumerator that keeps track of unique agents
+ */
 public enum Agent {
-    ZERO(0, "assets/zero.png"),
-    MUSTANG(1, "assets/mustang.png"),
-    HELLCAT(2, ""),
-    WILDCAT(3, ""),
-    MIRAGE(4, "");
+    ZERO(0, "assets/Agents/zero.png"),
+    MUSTANG(1, "assets/Agents/mustang.png"),
+    HELLCAT(2, "assets/Agents/hellcat.png"),
+    WILDCAT(3, "assets/Agents/wildcat.png"),
+    MIRAGE(4, "assets/Agents/mirage.png");
 
 //-------------------------------------------------------------------------------------
     private final int id;

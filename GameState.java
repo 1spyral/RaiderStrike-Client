@@ -244,7 +244,11 @@ public class GameState extends State {
         }
     }
     private int calculateAngle() {
-        return (int)(Math.toDegrees(Math.atan2(Const.HEIGHT / 2 - mouse.getY(), mouse.getX() - Const.WIDTH / 2)) + 360) % 360;
+        Player player = this.players[this.id];
+        Room room = player.getRoom();
+        int xCorner = (Const.WIDTH - room.getWidth()) / 2;
+        int yCorner = (Const.HEIGHT - room.getHeight()) / 2;
+        return (int)(Math.toDegrees(Math.atan2(yCorner + player.getY() - mouse.getY(), mouse.getX() - xCorner - player.getX())) + 360) % 360;
     }
     private void nextRound() {
         this.playing = false;

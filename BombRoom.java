@@ -1,18 +1,19 @@
-import java.util.*;
 import java.awt.*;
 
+/**
+ * A room where the bomb can be planted
+ */
 public class BombRoom extends Room {
-    public void draw(Graphics g, Player[] players, LinkedList<GameObject> objects) {
-        int xCorner = (Const.WIDTH - this.width) / 2;
-        int yCorner = (Const.HEIGHT - this.height) / 2;
+    public void draw(Graphics g, int xCorner, int yCorner) {
         g.setColor(this.color);
+        // Fill the dimensions of the room
         g.fillRect(xCorner, yCorner, this.width, this.height);
-        for (Player player: players) {
-            if (player != null && player.getRoom().equals(this)) {
-                player.draw(g, xCorner, yCorner);
-            }
-        }
         g.setColor(Color.YELLOW);
+        // Draw the borders of the room
         g.drawRect(xCorner, yCorner, this.width, this.height);
+        // Draw doors
+        for (Door door: this.doors) {
+            door.draw(g, xCorner, yCorner);
+        }
     }
 }

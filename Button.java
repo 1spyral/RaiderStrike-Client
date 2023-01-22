@@ -1,4 +1,9 @@
 import java.awt.*;
+
+/**
+ * Abstract class that acts as a rectangular button
+ */
+
 public abstract class Button extends Rectangle {
     private Mouse mouse;
 

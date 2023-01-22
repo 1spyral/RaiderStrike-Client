@@ -1,6 +1,8 @@
-import java.util.*;
 import java.awt.*;
 
+/**
+ * A room where players spawn
+ */
 public class SpawnRoom extends Room {
     protected int[] spawnX;
     protected int[] spawnY;
@@ -11,17 +13,21 @@ public class SpawnRoom extends Room {
     public void setSpawnY(int[] spawnY) {
         this.spawnY = spawnY;
     }
-    public void draw(Graphics g, Player[] players, LinkedList<GameObject> objects) {
-        int xCorner = (Const.WIDTH - this.width) / 2;
-        int yCorner = (Const.HEIGHT - this.height) / 2;
+    public void draw(Graphics g, int xCorner, int yCorner) {
         g.setColor(this.color);
+        // Fill the dimensions of the room
         g.fillRect(xCorner, yCorner, this.width, this.height);
-        for (Player player: players) {
-            if (player != null && player.getRoom().equals(this)) {
-                player.draw(g, xCorner, yCorner);
-            }
-        }
         g.setColor(Color.RED);
+        // Draw the borders of the room
         g.drawRect(xCorner, yCorner, this.width, this.height);
+        // Draw doors
+        for (Door door: this.doors) {
+            door.draw(g, xCorner, yCorner);
+        }
+        // Draw spawn locations
+        for (int i = 0; i < 3; i++) {
+            g.setColor(Color.YELLOW);
+            g.drawOval(xCorner + this.spawnX[i] - Const.PLAYER_RADIUS, yCorner + this.spawnY[i] - Const.PLAYER_RADIUS, Const.PLAYER_RADIUS * 2, Const.PLAYER_RADIUS * 2);
+        }
     }
 }
