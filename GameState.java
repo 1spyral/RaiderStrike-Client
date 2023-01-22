@@ -169,6 +169,9 @@ public class GameState extends State {
             } else if (key == '2') {
                 this.heldGun = 2;
             }
+            if (key == 'r' || key == 'R') {
+                this.messenger.print("RELOAD");
+            }
         }
     }
     public void click(Mouse.Click click) {
