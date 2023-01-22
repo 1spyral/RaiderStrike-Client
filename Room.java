@@ -42,6 +42,9 @@ public class Room {
         g.fillRect(xCorner, yCorner, this.width, this.height);
         g.setColor(Color.WHITE);
         g.drawRect(xCorner, yCorner, this.width, this.height);
+        for (Door door: this.doors) {
+            door.draw(g, xCorner, yCorner);
+        }
     }
     public void addObstacle(Obstacle obstacle) {
         for (int i = 0; i < this.obstacles.length; i++) {

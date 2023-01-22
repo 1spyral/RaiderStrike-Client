@@ -72,7 +72,7 @@ public class GameState extends State {
             // Calculate what angle the player is aiming
             this.setAngle(this.calculateAngle());
             // Remove expired bullet tracers
-            while (!this.tracers.peek().isActive()) {
+            while (!this.tracers.isEmpty() && !this.tracers.peek().isActive()) {
                 this.tracers.pop();
             }
         }

@@ -17,7 +17,16 @@ public class Door {
         this.direction = direction;
     }
 
-    public void draw(Graphics g) {
-        // TODO: draw door
+    public void draw(Graphics g, int xCorner, int yCorner) {
+        ((Graphics2D)g).setStroke(new BasicStroke(3));
+        g.setColor(Color.GREEN);
+        // Up/down
+        if (this.direction % 2 != 0) {
+            g.drawLine(xCorner + this.x, yCorner + this.y, xCorner + this.x, yCorner + this.y + this.width);
+        }
+        // Left/right
+        else {
+            g.drawLine(xCorner + this.x, yCorner + this.y, xCorner + this.x + this.width, yCorner + this.y);
+        }
     }
 }
