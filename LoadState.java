@@ -89,7 +89,7 @@ public class LoadState extends State {
         BufferedReader input;
         Loader(String mapName) {
             try {
-                this.input = new BufferedReader(new FileReader("assets/Maps/" + mapName + "Map.txt"));
+                this.input = new BufferedReader(new FileReader("assets/Maps/" + mapName + ".txt"));
             } catch (Exception e) {
                 System.out.println("Error accessing map file");
             }
@@ -150,7 +150,7 @@ public class LoadState extends State {
         }
         private String nextLine() {
             try {
-                while (this.input.ready()) {};
+                if (this.input.ready()) {};
                 return this.input.readLine();
             } catch (Exception e) {
                 System.out.println("Error reading map file");
