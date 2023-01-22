@@ -362,7 +362,7 @@ public class GameState extends State {
                     g.setColor(Color.YELLOW);
                 }
                 if (player.getTeam() == 0) {
-                    g.fillOval((int)(Const.HEIGHT * 0.05 + Const.WIDTH * 0.01 + Const.WIDTH * 0.06 * red), (int)(Const.HEIGHT * 0.55), (int)(Const.WIDTH * 0.05), (int)(Const.WIDTH * 0.05));
+                    g.fillOval((int)(Const.HEIGHT * 0.05 + Const.WIDTH * 0.01 + Const.WIDTH * 0.06 * red), (int)(Const.HEIGHT * 0.525), (int)(Const.WIDTH * 0.05), (int)(Const.WIDTH * 0.05));
                     red++;
                 } else {
                     g.fillOval((int)(Const.HEIGHT * 0.05 + Const.WIDTH * 0.01 + Const.WIDTH * 0.06 * blue), (int)(Const.HEIGHT * 0.65), (int)(Const.WIDTH * 0.05), (int)(Const.WIDTH * 0.05));
