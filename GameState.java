@@ -7,17 +7,18 @@ public class GameState extends State {
     Player[] players;
     Map map;
 
-    LinkedList<GameObject> objects;
-
     int creds;
     Sidearm sidearm;
     Primary primary;
-
+    
     boolean playing;
     boolean shooting;
     int direction;
     int angle;
     int heldGun; // 1 - primary, 2 - sidearm
+    
+    LinkedList<GameObject> objects;
+    LinkedList<Tracer> tracers;
 
     MinimapPanel minimapPanel;
     PlayersPanel playerPanel;
@@ -35,6 +36,7 @@ public class GameState extends State {
         this.map = (Map)args[2];
 
         this.objects = new LinkedList<GameObject>();
+        this.tracers = new LinkedList<Tracer>();
 
         this.minimapPanel = new MinimapPanel();
         this.playerPanel = new PlayersPanel(this.players);
@@ -69,6 +71,10 @@ public class GameState extends State {
             }
             // Calculate what angle the player is aiming
             this.setAngle(this.calculateAngle());
+            // Remove expired bullet tracers
+            while (!this.tracers.peek().isActive()) {
+                this.tracers.pop();
+            }
         }
     }
     public void message(String messageText) {
@@ -172,7 +178,26 @@ public class GameState extends State {
         if (!this.playing) {
 
         } else {
-            this.players[this.id].getRoom().draw(g, this.players, this.objects);
+            Room room = this.players[this.id].getRoom();
+            int xCorner = (Const.WIDTH - room.getWidth()) / 2;
+            int yCorner = (Const.HEIGHT - room.getHeight()) / 2;
+            room.draw(g, xCorner, yCorner);
+            for (Player player: this.players) {
+                if (player != null && player.getRoom().equals(room)) {
+                    player.draw(g, xCorner, yCorner);
+                }
+            }
+            for (GameObject object: this.objects) {
+                if (object.getRoom() != null && object.getRoom().equals(room)) {
+                    object.draw(g, xCorner, yCorner);
+                }
+            }
+            for (Tracer tracer: this.tracers) {
+                if (tracer.getRoom().equals(room)) {
+                    tracer.draw(g, xCorner, yCorner);
+                }
+            }
+            
         }
     }
     public void close() {
@@ -255,7 +280,7 @@ public class GameState extends State {
         this.objects.remove(Integer.parseInt(args[0]));
     }
     public void bullet(String[] args) {
-        // TODO
+        this.tracers.add(new Tracer(this.map.getRooms()[Integer.valueOf(args[0])], this.players[Integer.valueOf(args[1])], Integer.valueOf(args[2])));
     }
     public void gun(String[] args) {
         // TODO

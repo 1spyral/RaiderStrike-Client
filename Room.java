@@ -37,21 +37,9 @@ public class Room {
     public void setDoorCount(int doorCount) {
         this.doors = new Door[doorCount];
     }
-    public void draw(Graphics g, Player[] players, LinkedList<GameObject> objects) {
-        int xCorner = (Const.WIDTH - this.width) / 2;
-        int yCorner = (Const.HEIGHT - this.height) / 2;
+    public void draw(Graphics g, int xCorner, int yCorner) {
         g.setColor(this.color);
         g.fillRect(xCorner, yCorner, this.width, this.height);
-        for (Player player: players) {
-            if (player != null && player.getRoom().equals(this)) {
-                player.draw(g, xCorner, yCorner);
-            }
-        }
-        for (GameObject object: objects) {
-            if (object.getRoom() != null && object.getRoom().equals(this)) {
-                object.draw(g, xCorner, yCorner);
-            }
-        }
         g.setColor(Color.WHITE);
         g.drawRect(xCorner, yCorner, this.width, this.height);
     }
