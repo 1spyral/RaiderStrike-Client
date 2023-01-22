@@ -35,6 +35,8 @@ public class GameState extends State {
         this.players = (Player[])args[1];
         this.map = (Map)args[2];
 
+        this.sidearm = new Sidearm("Robin", 12);
+
         this.objects = new LinkedList<GameObject>();
         this.tracers = new LinkedList<Tracer>();
 
@@ -45,7 +47,11 @@ public class GameState extends State {
     }
     public void update() {
         super.update();
-
+        for (Player player: this.players) {
+            if (player != null) {
+                player.update();
+            }
+        }
         if (this.playing) {
             // Determine if the player is shooting
             this.setShooting(this.mouse.isPressed(MouseEvent.BUTTON1));
@@ -174,6 +180,7 @@ public class GameState extends State {
         }
     }
     public void draw(Graphics g) {
+        this.playerPanel.draw(g);
         this.weaponsPanel.draw(g);
         if (!this.playing) {
 
@@ -322,7 +329,31 @@ public class GameState extends State {
             this.players = players;
         }
         public void draw(Graphics g) {
-            
+            g.setColor(Color.RED);
+            g.fillRect((int)(Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.5), (int)(Const.WIDTH * 0.2), (int)(Const.HEIGHT * 0.125));
+            g.setColor(Color.CYAN);
+            g.fillRect((int)(Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.625), (int)(Const.WIDTH * 0.2), (int)(Const.HEIGHT * 0.125));
+            g.setColor(Color.BLACK);
+            g.drawRect((int)(Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.5), (int)(Const.WIDTH * 0.2), (int)(Const.HEIGHT * 0.25));
+            int red = 0;
+            int blue = 0;
+            for (Player player: this.players) {
+                if (player == null) {
+                    break;
+                }
+                if (player.isDamaged()) {
+                    g.setColor(Color.PINK);
+                } else {
+                    g.setColor(Color.YELLOW);
+                }
+                if (player.getTeam() == 0) {
+                    g.fillOval((int)(Const.HEIGHT * 0.05 + Const.WIDTH * 0.01 + Const.WIDTH * 0.06 * red), (int)(Const.HEIGHT * 0.55), (int)(Const.WIDTH * 0.05), (int)(Const.WIDTH * 0.05));
+                    red++;
+                } else {
+                    g.fillOval((int)(Const.HEIGHT * 0.05 + Const.WIDTH * 0.01 + Const.WIDTH * 0.06 * blue), (int)(Const.HEIGHT * 0.65), (int)(Const.WIDTH * 0.05), (int)(Const.WIDTH * 0.05));
+                    blue++;
+                }
+            }
         }
     }
     private class TimePanel {
@@ -335,7 +366,14 @@ public class GameState extends State {
             this.player = player;
         }
         public void draw(Graphics g) {
-            g.drawRect((int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.6), (int)(Const.WIDTH * 0.25 - Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.35));
+            g.setColor(Color.BLACK);
+            g.drawRect((int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.55), (int)(Const.WIDTH * 0.25 - Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.4));
+            if (primary != null) {
+                g.drawImage(primary.getModel().getSideImage(), (int)(Const.WIDTH * 0.8), (int)(Const.HEIGHT * 0.8), null);
+            } if (sidearm != null) {
+                System.out.println(sidearm.getModel().getSideImage().getHeight());
+                g.drawImage(sidearm.getModel().getSideImage(), (int)(Const.WIDTH * 0.8), (int)(Const.HEIGHT * 0.7), null);
+            }
         }
     }
 }

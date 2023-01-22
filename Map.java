@@ -21,7 +21,6 @@ public class Map {
         for (int i = 0; i < this.rooms.length; i++) {
             if (this.rooms[i] == null) {
                 this.rooms[i] = room;
-                System.out.println("dasdjlksjd");
                 break;
             }
         }

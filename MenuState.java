@@ -95,6 +95,9 @@ public class MenuState extends State {
             case "TEAM":
                 this.team(args);
                 break;
+            case "PLAYER_TEAM":
+                this.player_team(args);
+                break;
             case "JOINED":
                 this.joined(args);
                 break;
@@ -171,6 +174,9 @@ public class MenuState extends State {
             this.buttons.get("blue").setColor(Color.LIGHT_GRAY);
             this.buttons.get("blue").setHoverColor(Color.LIGHT_GRAY);
         }
+    }
+    private void player_team(String[] args) {
+        this.players[Integer.valueOf(args[0])].setTeam(Integer.valueOf(args[1]));
     }
     private void joined(String[] args) {
         this.buttons.get("red").setActive(false);

@@ -32,6 +32,9 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+    public int getTeam() {
+        return team;
+    }
     public void setTeam(int team) {
         this.team = team;
     }
@@ -85,6 +88,9 @@ public class Player {
     }
     public void setHealth(int health) {
         this.health = health;
+    }
+    public boolean isDamaged() {
+        return this.damageFrames > 0;
     }
     public void damaged() {
         this.damageFrames = 30;

@@ -46,10 +46,10 @@ public enum GunModel {
         this.reloadSpeed = reloadSpeed;
         this.fireRate = fireRate;
     }
-    public Image getTopImage() {
+    public BufferedImage getTopImage() {
         return this.topImage;
     }
-    public Image getSideImage() {
+    public BufferedImage getSideImage() {
         return this.sideImage;
     }
     public int getPrice() {

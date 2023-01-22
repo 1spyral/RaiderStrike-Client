@@ -23,6 +23,7 @@ public class Server extends Thread {
                 e.printStackTrace();
             }
             if (message.length() > 0) {
+                System.out.println(message);
                 this.messenger.add(message);
             }
         }

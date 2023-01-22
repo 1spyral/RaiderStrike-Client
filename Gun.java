@@ -11,6 +11,9 @@ public class Gun {
     Gun(String type) {
         this(type, GunModel.valueOf(type).getMaxAmmo());
     }
+    public GunModel getModel() {
+        return this.model;
+    }
     public int getAmmo() {
         return this.ammo; 
     }
