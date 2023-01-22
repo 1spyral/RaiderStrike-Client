@@ -21,6 +21,7 @@ public class GameState extends State {
     LinkedList<Tracer> tracers;
 
     MinimapPanel minimapPanel;
+    HealthAmmoPanel healthAmmoPanel;
     PlayersPanel playerPanel;
     TimePanel timePanel;
     WeaponsPanel weaponsPanel;
@@ -37,10 +38,13 @@ public class GameState extends State {
 
         this.sidearm = new Sidearm("Robin", 12);
 
+        this.heldGun = 2;
+
         this.objects = new LinkedList<GameObject>();
         this.tracers = new LinkedList<Tracer>();
 
         this.minimapPanel = new MinimapPanel();
+        this.healthAmmoPanel = new HealthAmmoPanel();
         this.playerPanel = new PlayersPanel(this.players);
         this.timePanel = new TimePanel();
         this.weaponsPanel = new WeaponsPanel(this.players[this.id]);
@@ -180,6 +184,7 @@ public class GameState extends State {
         }
     }
     public void draw(Graphics g) {
+        this.healthAmmoPanel.draw(g);
         this.playerPanel.draw(g);
         this.weaponsPanel.draw(g);
         if (!this.playing) {
@@ -322,6 +327,16 @@ public class GameState extends State {
     private class MinimapPanel {
 
     }
+    private class HealthAmmoPanel {
+        public void draw(Graphics g) {
+            g.setColor(Color.RED);
+            Text.drawCentered(g, 20, String.valueOf(Math.min(100, players[id].getHealth())), (int)(Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.9));
+            g.setColor(Color.CYAN);
+            Text.drawCentered(g, 20, String.valueOf(Math.max(0, players[id].getHealth() - 100)), (int)(Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.85));
+            g.setColor(Color.YELLOW);
+            Text.drawCentered(g, 20, String.valueOf(heldGun == 1 ? primary.getAmmo() : sidearm.getAmmo()), (int)(Const.HEIGHT * 0.1), (int)(Const.HEIGHT * 0.875));
+        }
+    }
     private class PlayersPanel {
         Player[] players;
 
@@ -369,10 +384,11 @@ public class GameState extends State {
             g.setColor(Color.BLACK);
             g.drawRect((int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.55), (int)(Const.WIDTH * 0.25 - Const.HEIGHT * 0.05), (int)(Const.HEIGHT * 0.4));
             if (primary != null) {
-                g.drawImage(primary.getModel().getSideImage(), (int)(Const.WIDTH * 0.8), (int)(Const.HEIGHT * 0.8), null);
+                Text.draw(g, 10, primary.getModel().name(), (int)(Const.WIDTH * 0.8), (int)(Const.HEIGHT * 0.8));
+                g.drawImage(primary.getModel().getSideImage(), (int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.8), null);
             } if (sidearm != null) {
-                System.out.println(sidearm.getModel().getSideImage().getHeight());
-                g.drawImage(sidearm.getModel().getSideImage(), (int)(Const.WIDTH * 0.8), (int)(Const.HEIGHT * 0.7), null);
+                Text.draw(g, 10, sidearm.getModel().name(), (int)(Const.WIDTH * 0.8), (int)(Const.HEIGHT * 0.7));
+                g.drawImage(sidearm.getModel().getSideImage(), (int)(Const.WIDTH * 0.75), (int)(Const.HEIGHT * 0.7), null);
             }
         }
     }

@@ -1,0 +1,20 @@
+NAME <String name>
+ROOM_COUNT <int count>
+DEFENDER_SPAWN <int roomId>
+ATTACKER_SPAWN <int roomId>
+BOMB_ROOM <int* roomId>
+
+ROOM_COLOR <int r> <int g> <int b>
+OBSTACLE_COLOR <int r> <int g> <int b>
+PEN_OBSTACLE_COLOR <int r> <int g> <int b>
+
+WIDTH <int width>
+HEIGHT <int height>
+
+OBSTACLE_COUNT <int count>
+OBSTACLE <String shape> <int width> <int height> <int x> <int y> <boolean penetrable>
+
+DOOR_COUNT <int count>
+DOOR <int width> <int x> <int y> <int idToRoom> <int doorId> <int direction>
+
+SPAWN_LOCATION <int x1> <int y1> <int x2> <int y2> <int x3> <int y3>

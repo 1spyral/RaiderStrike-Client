@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 import java.awt.*;
 
 public class LoadState extends State {
@@ -36,9 +37,6 @@ public class LoadState extends State {
                 break;
             case "START":
                 this.start(args);
-                break;
-            default:
-                this.loader.add(messageText);
                 break;
         }
     }
@@ -80,14 +78,22 @@ public class LoadState extends State {
     }
     private void map(String[] args) {
         this.map = new Map();
-        this.loader = new Loader();
+        this.loader = new Loader(args[0]);
         new Thread(this.loader).start();
     }
     private void start(String[] args) {
         this.close();
     }
 
-    private class Loader extends LinkedList<String> implements Runnable {
+    private class Loader implements Runnable {
+        BufferedReader input;
+        Loader(String mapName) {
+            try {
+                this.input = new BufferedReader(new FileReader("assets/Maps/" + mapName + "Map.txt"));
+            } catch (Exception e) {
+                System.out.println("Error accessing map file");
+            }
+        }
         public void run() {
             // Read the map name
             map.setName(this.nextLine());
@@ -143,8 +149,13 @@ public class LoadState extends State {
             messenger.print("LOADED");
         }
         private String nextLine() {
-            while (this.isEmpty()) {try {Thread.sleep(10);} catch (Exception e) {}};
-            return this.poll();
+            try {
+                while (this.input.ready()) {};
+                return this.input.readLine();
+            } catch (Exception e) {
+                System.out.println("Error reading map file");
+            }
+            return null;
         }
     }
 }
