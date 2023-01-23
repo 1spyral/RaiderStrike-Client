@@ -218,7 +218,7 @@ public class GameState extends State {
         super.draw(g);
 
         if (!this.playing) {
-
+            Text.draw(g, 30, "Money: $" + this.creds, 20, 20);
         } else {
             this.healthAmmoPanel.draw(g);
             this.playerPanel.draw(g);
