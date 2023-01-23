@@ -22,7 +22,7 @@ public class Player {
         this.team = -1;
         this.ready = false;
 
-        this.alive = false;
+        this.alive = true;
         this.gun = GunModel.Robin;
         this.x = -1;
         this.y = -1;
