@@ -120,5 +120,9 @@ public class Player {
             transform.rotate(-Math.toRadians(this.angle - 90), image.getWidth() / 2, image.getHeight() / 2);
             ((Graphics2D)g).drawImage(image, transform, null);
         }
+        if (this.isAlive()) {
+            g.setColor(Color.WHITE);
+            Text.drawCentered(g, 20, this.name, this.getX() + xCorner, this.getY() + yCorner - Const.PLAYER_RADIUS * 2);
+        }
     }
 }
