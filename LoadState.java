@@ -2,6 +2,9 @@ import java.util.*;
 import java.io.*;
 import java.awt.*;
 
+/**
+ * State that loads the game map
+ */
 public class LoadState extends State {
     int id;
     Player[] players;

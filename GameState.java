@@ -192,9 +192,11 @@ public class GameState extends State {
             if (key == '1') {
                 if (this.primary != null) {
                     this.heldGun = 1;
+                    this.messenger.print("SWAP 1");
                 }
             } else if (key == '2') {
                 this.heldGun = 2;
+                this.messenger.print("SWAP 2");
             }
             if (key == 'r' || key == 'R') {
                 this.messenger.print("RELOAD");
@@ -390,9 +392,11 @@ public class GameState extends State {
             return true;
         }
     }
+    // Panel that draws a simplified version of the map on the screen
     private class MinimapPanel {
 
     }
+    // Panel that draws health and ammo
     private class HealthAmmoPanel {
         public void draw(Graphics g) {
             g.setColor(Color.RED);
@@ -403,6 +407,7 @@ public class GameState extends State {
             Text.drawCentered(g, 20, String.valueOf(heldGun == 1 ? primary.getAmmo() : sidearm.getAmmo()), (int)(Const.HEIGHT * 0.1), (int)(Const.HEIGHT * 0.875));
         }
     }
+    // Panel that draws the players on each team
     private class PlayersPanel {
         Player[] players;
 
@@ -437,9 +442,11 @@ public class GameState extends State {
             }
         }
     }
+    // Panel that draws the time remaining
     private class TimePanel {
         
     }
+    // Panel that draws the weapons the player is carrying
     private class WeaponsPanel {
         public void draw(Graphics g) {
             g.setColor(Color.BLACK);
@@ -453,6 +460,7 @@ public class GameState extends State {
             }
         }
     }
+    // Thread that simulates a bullet reload
     private class Reloader implements Runnable {
         Gun gun;
 

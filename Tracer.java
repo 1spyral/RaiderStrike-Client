@@ -1,5 +1,8 @@
 import java.awt.*;
 
+/**
+ * Represents the path of a bullet
+ */
 public class Tracer {
     Room room;
     int x1;
@@ -22,6 +25,7 @@ public class Tracer {
     public Room getRoom() {
         return this.room;
     }
+    // Whether the tracer has expired or not
     public boolean isActive() {
         return System.currentTimeMillis() - this.startTime <= 500;
     }

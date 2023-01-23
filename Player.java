@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.image.*;
 import java.awt.geom.*;
 
+/**
+ * Class that represents a player
+ */
 public class Player {
     protected String name;
     protected int team;

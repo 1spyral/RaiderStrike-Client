@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.image.*;
 import javax.imageio.*;
 
+/**
+ * State that controls the pre-game menu
+ */
 public class MenuState extends State {
     BufferedImage title;
 
