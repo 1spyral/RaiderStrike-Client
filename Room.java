@@ -1,6 +1,8 @@
-import java.util.*;
 import java.awt.*;
 
+/**
+ * A class that represents a room on the map
+ */
 public class Room {
     protected Color color;
     protected Color obstacleColor;

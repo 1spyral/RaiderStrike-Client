@@ -1,12 +1,16 @@
 import java.util.*;
 import java.awt.*;
 
+/**
+ * Abstract class for a state of the program 
+ */ 
 public abstract class State {
     Keyboard keyboard;
     Mouse mouse;
     Messenger messenger;
 
     private boolean active;
+    // The arguments that will be passed onto the next state
     private Object[] nextArgs;
 
     protected HashMap<String, Button> buttons;
@@ -38,6 +42,7 @@ public abstract class State {
         this.active = false;
     }
     public abstract void setup(Object[] args);
+    // Process inputs
     public void update() {
         while (!this.messenger.isEmpty() && this.isActive()) {
             this.message(this.messenger.poll());
@@ -49,8 +54,11 @@ public abstract class State {
             this.click(this.mouse.poll());
         }
     }
+    // On message receive
     public abstract void message(String messageText);
+    // On key type
     public abstract void type(char key);
+    // On mouse click
     public abstract void click(Mouse.Click click);
     public void draw(Graphics g) {
         for (Button button: this.buttons.values()) {

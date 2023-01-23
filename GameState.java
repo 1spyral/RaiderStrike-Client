@@ -45,6 +45,7 @@ public class GameState extends State {
         this.players = (Player[])args[1];
         this.map = (Map)args[2];
 
+        // Starting gun
         this.sidearm = new Sidearm("Robin", 12);
 
         this.heldGun = 2;
@@ -216,10 +217,11 @@ public class GameState extends State {
     }
     public void draw(Graphics g) {
         super.draw(g);
-
         if (!this.playing) {
+            // Draw money
             Text.draw(g, 30, "Money: $" + this.creds, 20, 20);
-        } else {
+        } 
+        else {
             this.healthAmmoPanel.draw(g);
             this.playerPanel.draw(g);
             this.weaponsPanel.draw(g);
