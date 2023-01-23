@@ -57,6 +57,23 @@ public class GameState extends State {
         this.playerPanel = new PlayersPanel(this.players);
         this.timePanel = new TimePanel();
         this.weaponsPanel = new WeaponsPanel();
+
+        int gunNumber = 0;
+        for (int y = 100; y < Const.HEIGHT - 150; y += 150) {
+            for (int x = 100; x < Const.WIDTH - 300; x += 300) {
+                if (gunNumber < GunModel.values().length) {
+                    Button gunButton = new GunButton(this.mouse, GunModel.values()[gunNumber]);
+                    gunButton.setColor(Color.WHITE);
+                    gunButton.setHoverColor(Color.GRAY);
+                    gunButton.setTextColor(Color.BLACK);
+                    gunButton.setBounds(x, y, 300, 150);
+                    gunButton.setFontSize(30);
+                    gunButton.setActive(true);
+                    gunNumber += 1;
+                    this.buttons.put("Gun" + gunNumber, gunButton);
+                }
+            }
+        }
     }
     public void update() {
         super.update();
@@ -198,12 +215,15 @@ public class GameState extends State {
         }
     }
     public void draw(Graphics g) {
-        this.healthAmmoPanel.draw(g);
-        this.playerPanel.draw(g);
-        this.weaponsPanel.draw(g);
+        super.draw(g);
+
         if (!this.playing) {
 
         } else {
+            this.healthAmmoPanel.draw(g);
+            this.playerPanel.draw(g);
+            this.weaponsPanel.draw(g);
+
             Room room = this.players[this.id].getRoom();
             int xCorner = (Const.WIDTH - room.getWidth()) / 2;
             int yCorner = (Const.HEIGHT - room.getHeight()) / 2;
@@ -268,6 +288,9 @@ public class GameState extends State {
     /* Server-Client commands */
     public void round_start(String[] args) {
         this.playing = true;
+        for (Button button: this.buttons.values()) {
+            button.setActive(false);
+        }
     }
     public void creds(String[] args) {
         this.creds = Integer.valueOf(args[0]);
@@ -341,7 +364,26 @@ public class GameState extends State {
     public void win(String[] args) {
         this.nextRound();
     }
+    private class GunButton extends Button {
+        GunModel gunModel;
 
+        GunButton(Mouse mouse, GunModel gunModel) {
+            super(mouse);
+            this.gunModel = gunModel;
+            this.setText(this.gunModel.name() + " $" + this.gunModel.getPrice());
+        }
+        public void draw(Graphics g) {
+            super.draw(g);
+            if (!this.active) {
+                return;
+            }
+            g.drawImage(this.gunModel.getSideImage(), (int)this.getX() + 20, (int)this.getY() + 75, null);
+        }
+        public boolean run() {
+            messenger.print("BUY " + this.gunModel.name());
+            return true;
+        }
+    }
     private class MinimapPanel {
 
     }
