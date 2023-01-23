@@ -303,6 +303,10 @@ public class GameState extends State {
     }
     public void death(String[] args) {
         this.players[Integer.valueOf(args[0])].setAlive(false);
+        if (this.id == Integer.valueOf(args[0])) {
+            this.primary = null;
+            this.sidearm = new Sidearm("Robin", GunModel.Robin.getMaxAmmo());
+        }
         // TODO: kill feed
     }
     public void player_room(String[] args) {
@@ -353,7 +357,7 @@ public class GameState extends State {
         this.players[Integer.valueOf(args[0])].setHealth(Integer.valueOf(args[1]));
     }
     public void damage(String[] args) {
-        // TODO
+        this.players[Integer.valueOf(args[0])].damaged();
     }
     public void audio(String[] args) {
         // TODO

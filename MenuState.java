@@ -132,7 +132,9 @@ public class MenuState extends State {
         ((Graphics2D) g).setStroke(new BasicStroke(3));
         g.setColor(Color.BLACK);
         if (this.id != -1 && this.players[this.id] != null && this.players[this.id].getName() != null) {
-
+            if (this.players[this.id].getAgent() != null) {
+                Text.drawCentered(g, 30, "Selected agent: " + this.players[this.id].getAgent().name(), Const.WIDTH / 2, Const.HEIGHT * 0.3);
+            }
         } 
         else {
             g.drawImage(this.title, (Const.WIDTH - this.title.getWidth()) / 2, (Const.HEIGHT - this.title.getHeight()) / 4, null);

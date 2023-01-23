@@ -102,9 +102,15 @@ public class Player {
         this.damageFrames--;
     }
     public void draw(Graphics g, int xCorner, int yCorner) {
-        g.setColor(Color.YELLOW);
+        if (this.isDamaged()) {
+            g.setColor(Color.RED);
+        } else if (this.isAlive()) {
+            g.setColor(Color.YELLOW);
+        } else {
+            g.setColor(new Color(0, 0, 0, 100));
+        }
         g.fillOval(xCorner + this.getX() - Const.PLAYER_RADIUS, yCorner + this.getY() - Const.PLAYER_RADIUS, Const.PLAYER_RADIUS * 2, Const.PLAYER_RADIUS * 2);
-        if (this.getGun() != null) {
+        if (this.isAlive() && this.getGun() != null) {
             BufferedImage image = this.getGun().getTopImage();
             AffineTransform transform = new AffineTransform();
             transform.translate(xCorner + this.getX() - Const.PLAYER_RADIUS, yCorner + this.getY() - Const.PLAYER_RADIUS);
