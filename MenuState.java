@@ -212,6 +212,9 @@ public class MenuState extends State {
         this.close();
     }
 
+    /**
+     * Button to enter name
+     */
     private class NameButton extends Button {
         NameButton(Mouse mouse) {
             super(mouse);
@@ -250,6 +253,9 @@ public class MenuState extends State {
             }
         }
     }
+    /**
+     * Button to join red team
+     */
     private class RedButton extends Button {
         RedButton(Mouse mouse) {
             super(mouse);
@@ -265,6 +271,9 @@ public class MenuState extends State {
             return true;
         }
     }
+    /**
+     * Button to join blue team
+     */
     private class BlueButton extends Button {
         BlueButton(Mouse mouse) {
             super(mouse);
@@ -277,6 +286,9 @@ public class MenuState extends State {
             return true;
         }
     }
+    /**
+     * Button to pick agent
+     */
     private class AgentButton extends Button {
         private Agent agent;
 
@@ -304,6 +316,9 @@ public class MenuState extends State {
             return true;
         }
     }
+    /**
+     * Button to lock in agent
+     */
     private class ReadyButton extends Button {
         ReadyButton(Mouse mouse) {
             super(mouse);
@@ -314,6 +329,9 @@ public class MenuState extends State {
             return true;
         }
     }
+    /**
+     * Typing indicator
+     */
     private class Caret {
         private int ticks;
 

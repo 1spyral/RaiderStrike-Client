@@ -1,8 +1,10 @@
 import java.io.*;
-import java.awt.*;
 import java.awt.image.*;
 import javax.imageio.*;
 
+/**
+ * Enumerator that stores information about different gun models
+ */
 public enum GunModel {
     // Sidearms
     Robin("assets/Guns/Robin/Top.png", "assets/Guns/Robin/Side.png", 0, 10, 2, 7),

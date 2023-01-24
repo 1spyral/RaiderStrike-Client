@@ -1,5 +1,8 @@
 import java.awt.*;
 
+/**
+ * Static helper class that draws text on the screen
+ */
 public class Text {
     private Text() {}
 

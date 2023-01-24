@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * Class that represents a sidearm weapon
+ */
 public class Sidearm extends Gun {
     private final static HashSet<GunModel> sidearms = new HashSet<GunModel>() {
         {

@@ -1,5 +1,9 @@
 import java.util.*;
 import java.awt.event.*;
+
+/**
+ * Keyboard class that receives key input for the client
+ */
 public class Keyboard implements KeyListener {
     private Queue<Character> keysTyped;
     private HashSet<Integer> keysPressed;

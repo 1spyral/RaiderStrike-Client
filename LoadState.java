@@ -123,27 +123,37 @@ public class LoadState extends State {
                     room = new Room();
                 }
                 map.addRoom(room);
+                // Read the room colour
                 String[] rgb = this.nextLine().split(" ");
                 room.setColor(new Color(Integer.valueOf(rgb[0]), Integer.valueOf(rgb[1]), Integer.valueOf(rgb[2])));
+                // Read the obstacle colour
                 rgb = this.nextLine().split(" ");
                 room.setObstacleColor(new Color(Integer.valueOf(rgb[0]), Integer.valueOf(rgb[1]), Integer.valueOf(rgb[2])));
+                // Read the penetrable obstacle colour
                 rgb = this.nextLine().split(" ");
                 room.setPenetrableObstacleColor(new Color(Integer.valueOf(rgb[0]), Integer.valueOf(rgb[1]), Integer.valueOf(rgb[2])));
+                // Read the room width
                 room.setWidth(Integer.valueOf(this.nextLine()));
+                // Read the room height
                 room.setHeight(Integer.valueOf(this.nextLine()));
+                // Read the obstacle count
                 int obstacleCount = Integer.valueOf(this.nextLine());
                 room.setObstacleCount(obstacleCount);
                 for (int obstacleId = 0; obstacleId < obstacleCount; obstacleId++) {
+                    // Read obstacle details
                     String[] args = this.nextLine().split(" ");
                     room.addObstacle(new Obstacle(Integer.valueOf(args[0]), Integer.valueOf(args[1]), Integer.valueOf(args[2]), Integer.valueOf(args[3]), args[4].equals("1")));
                 }
+                // Read the door count
                 int doorCount = Integer.valueOf(this.nextLine());
                 room.setDoorCount(doorCount);
                 for (int doorId = 0; doorId < doorCount; doorId++) {
+                    // Read door details
                     String[] args = this.nextLine().split(" ");
                     room.addDoor(new Door(Integer.valueOf(args[0]), Integer.valueOf(args[1]), Integer.valueOf(args[2]), Integer.valueOf(args[3]), Integer.valueOf(args[4]), Integer.valueOf(args[5])));
                 }
                 if (roomId == defenderSpawn || roomId == attackerSpawn) {
+                    // Read the player spawns
                     String[] spawns = this.nextLine().split(" ");
                     ((SpawnRoom)room).setSpawnX(new int[] {Integer.valueOf(spawns[0]), Integer.valueOf(spawns[2]), Integer.valueOf(spawns[4])});
                     ((SpawnRoom)room).setSpawnY(new int[] {Integer.valueOf(spawns[1]), Integer.valueOf(spawns[3]), Integer.valueOf(spawns[5])});

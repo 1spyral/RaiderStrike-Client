@@ -1,5 +1,9 @@
 import java.io.*;
 import java.net.*;
+
+/**
+ * Server class that communicates with the game server that the program is connected to
+ */
 public class Server extends Thread {
     private Socket socket;
     private BufferedReader input;

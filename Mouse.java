@@ -2,6 +2,9 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Class that keeps track of mouse motion and input
+ */
 public class Mouse extends Point implements MouseListener, MouseMotionListener {
     private Queue<Click> clicks;
     private boolean[] pressed;

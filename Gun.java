@@ -1,3 +1,6 @@
+/**
+ * Class that represents a gun in a player's inventory
+ */
 public class Gun {
     public GunModel model;
     private int ammo;

@@ -1,3 +1,6 @@
+/**
+ * Class that represents the game map
+ */
 public class Map {
     private String name;
     private Room[] rooms;

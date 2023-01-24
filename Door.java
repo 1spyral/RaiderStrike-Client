@@ -7,7 +7,9 @@ public class Door {
     protected int width;
     protected int x;
     protected int y;
+    // The room that the player will exit to
     protected int roomId;
+    // The door that the player will exit to
     protected int doorId;
     // The direction that the player will exit from: 0 - up, 1 - right, 2 - down, 3 - left
     protected int direction;
