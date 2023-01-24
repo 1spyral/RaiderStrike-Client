@@ -308,6 +308,7 @@ public class GameState extends State {
     public void death(String[] args) {
         this.players[Integer.valueOf(args[0])].setAlive(false);
         if (this.id == Integer.valueOf(args[0])) {
+            this.heldGun = 2;
             this.primary = null;
             this.sidearm = new Sidearm("Robin", GunModel.Robin.getMaxAmmo());
         }
