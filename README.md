@@ -1,3 +1,3 @@
-# MagicTerrorists-Client
+# RaiderStrike-Client
 
-Client for [Lolz247/MagicTerrorists-Server](https://github.com/Lolz247/MagicTerrorists-Server/)
+Client for [Lolz247/RaiderStrike-Server](https://github.com/Lolz247/RaiderStrike-Server/)
