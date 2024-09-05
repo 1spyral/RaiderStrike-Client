@@ -13,7 +13,7 @@ public class Client {
     StateMachine stateMachine;
 
     Client() throws Exception {
-        window = new JFrame("Magic Terrorists");   
+        window = new JFrame("Raider Strike");   
         gamePanel = new GamePanel();          
 
         keyboard = new Keyboard();
