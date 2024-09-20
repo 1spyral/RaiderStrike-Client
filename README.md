@@ -1,3 +1,3 @@
 # RaiderStrike-Client
 
-Client for [Lolz247/RaiderStrike-Server](https://github.com/Lolz247/RaiderStrike-Server/)
+Client for [will2dai4/RaiderStrike-Server](https://github.com/will2dai4/RaiderStrike-Server)
